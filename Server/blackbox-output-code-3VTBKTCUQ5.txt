@@ -1,0 +1,1 @@
+Stripe Test Card: 4242 4242 4242 4242 | Exp: 12/34 | CVC: 123

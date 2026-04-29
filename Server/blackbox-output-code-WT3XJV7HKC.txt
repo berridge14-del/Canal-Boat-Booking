@@ -1,0 +1,14 @@
+# 🚤 Rest & Roam - Luxury Canal Boat Booking
+
+## 🚀 Quick Start
+
+```bash
+git clone <repo>
+cd canal-boat-booking
+npm install
+
+# Copy env
+cp .env.example .env
+# Edit .env with your keys
+
+npm start

@@ -1,0 +1,145 @@
+<!-- Add Stripe & Google Fonts -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+// STRIPE INITIALIZATION
+const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY');
+
+// Replace calendar generation with real API
+async function generateCalendar(){
+  const grid = document.getElementById('calendarGrid');
+  const month = currentMonth + 1;
+  
+  try {
+    const response = await fetch(`/api/availability/${month}/${currentYear}`);
+    const { bookedDates } = await response.json();
+    
+    // Use real booked dates from Google Calendar
+    window.bookedDates = bookedDates;
+    renderCalendarDays(bookedDates);
+  } catch (error) {
+    console.error('Calendar fetch error:', error);
+    renderCalendarDays([]); // Fallback
+  }
+}
+
+function renderCalendarDays(bookedDates) {
+  const grid = document.getElementById('calendarGrid');
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  
+  let html = '';
+  for(let i = 0; i < firstDay; i++) html += '<div></div>';
+  
+  for(let day = 1; day <= daysInMonth; day++){
+    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const isBooked = bookedDates.includes(dateStr);
+    const isToday = dateStr === new Date().toISOString().split('T')[0];
+    const isSelected = (selectedCheckin === dateStr) || (selectedCheckout === dateStr);
+    
+    const dayClass = isBooked ? 'booked' : 
+                    (isSelected ? 'selected' : 
+                    (isToday ? 'today' : 'available'));
+    
+    html += `<div class="calendar-day ${dayClass}" data-date="${dateStr}">${day}</div>`;
+  }
+  
+  grid.innerHTML = html;
+  
+  // Re-attach event listeners
+  document.querySelectorAll('.calendar-day.available').forEach(day => {
+    day.onclick = function() {
+      handleDateClick(this.dataset.date);
+    };
+  });
+}
+
+async function confirmBooking(){
+  if(!selectedCheckin || !selectedCheckout) return;
+  
+  const guests = document.getElementById('guests').value;
+  const checkin = new Date(selectedCheckin);
+  const checkout = new Date(selectedCheckout);
+  const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+  
+  // Calculate final amount
+  let total = 0, weekendNights = 0;
+  for(let d = new Date(checkin); d < checkout; d.setDate(d.getDate() + 1)){
+    if(d.getDay() === 0 || d.getDay() === 6) weekendNights++;
+  }
+  total = (nights - weekendNights) * 245 + weekendNights * 325;
+  
+  try {
+    // 1. Create booking on server (blocks Google Calendar)
+    const response = await fetch('/api/create-booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        checkin: selectedCheckin,
+        checkout: selectedCheckout,
+        guests,
+        amount: total,
+        customerEmail: 'guest@example.com', // Get from form
+        customerName: 'Guest Name' // Get from form
+      })
+    });
+    
+    const { clientSecret, bookingId } = await response.json();
+    
+    // 2. Stripe Payment Modal
+    const { error } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: {
+          number: '4242424242424242',
+          exp_month: 12,
+          exp_year: 2025,
+          cvc: '123',
+        },
+        billing_details: {
+          name: 'Test User',
+          email: 'test@example.com'
+        }
+      }
+    });
+    
+    if(error) {
+      alert('Payment failed: ' + error.message);
+    } else {
+      // SUCCESS! Show confirmation
+      document.querySelector('.booking-system').innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px;background:var(--panel);border-radius:var(--radius);">
+          <h2 style="color:var(--gold-soft);margin-bottom:20px;">🎉 Booking Confirmed!</h2>
+          <p style="font-size:1.2rem;margin-bottom:30px;">Your luxury widebeam stay is secured.</p>
+          <div style="background:var(--panel-2);padding:30px;border-radius:20px;margin-bottom:30px;">
+            <p><strong>📅 ${new Date(selectedCheckin).toLocaleDateString('en-GB')} → ${new Date(selectedCheckout).toLocaleDateString('en-GB')}</strong></p>
+            <p><strong>💰 £${total.toLocaleString()} paid</strong></p>
+            <p><strong>📍 Mystery mooring revealed 48hrs prior</strong></p>
+          </div>
+          <button onclick="location.reload()" style="padding:18px 40px;background:var(--gold);color:#111;border:none;border-radius:16px;font-weight:700;font-size:1.1rem;cursor:pointer;">Book Another Stay</button>
+        </div>
+      `;
+      
+      // Track conversion (Google Analytics, etc.)
+      gtag?.('event', 'booking_complete', { value: total });
+    }
+    
+  } catch (error) {
+    alert('Booking error: ' + error.message);
+  }
+}
+
+// Add customer details form
+document.getElementById('booking-summary').insertAdjacentHTML('beforeend', `
+  <div class="summary-row">
+    <span>Name:</span>
+    <input id="customerName" placeholder="Full name" style="flex:1;background:var(--panel-2);border:1px solid var(--border);padding:8px 12px;border-radius:8px;color:var(--text);margin-left:8px;">
+  </div>
+  <div class="summary-row">
+    <span>Email:</span>
+    <input id="customerEmail" type="email" placeholder="email@example.com" style="flex:1;background:var(--panel-2);border:1px solid var(--border);padding:8px 12px;border-radius:8px;color:var(--text);margin-left:8px;">
+  </div>
+`);
+
+// Rest of your existing code (scroll, reveals, etc.) remains the same
+// ... [keep all previous functions]
+</script>

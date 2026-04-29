@@ -1,0 +1,19 @@
+@media(max-width:950px){
+  nav ul{display:none;}
+  .booking-bar{grid-template-columns:1fr;}
+}
+
+/* Add mobile menu button */
+@media(max-width:950px){
+  .mobile-menu-btn {
+    display: block;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--gold-soft);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+}
+
+.mobile-menu-btn { display: none; }

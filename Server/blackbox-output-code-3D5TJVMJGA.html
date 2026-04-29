@@ -1,0 +1,17 @@
+<div style="background:var(--panel-2);padding:28px;border-radius:var(--radius);margin:24px 0;text-align:center;">
+  <h3 style="margin-bottom:12px;">Dates Unavailable?</h3>
+  <p style="color:var(--muted);margin-bottom:18px;">Join our VIP waitlist for instant notifications.</p>
+  <input type="email" id="waitlistEmail" placeholder="your@email.com" style="width:280px;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--panel);color:var(--text);margin-right:12px;">
+  <button onclick="joinWaitlist()" style="padding:14px 28px;background:var(--gold);color:#111;border:none;border-radius:12px;font-weight:600;cursor:pointer;">Join Waitlist</button>
+</div>
+
+<script>
+function joinWaitlist(){
+  const email = document.getElementById('waitlistEmail').value;
+  if(email) {
+    // Send to your email service (Formspree, etc.)
+    window.open(`https://formspree.io/f/YOUR_FORM_ID?email=${encodeURIComponent(email)}&_next=/thank-you`, '_blank');
+    alert('✅ Added to VIP waitlist! We\'ll notify you of openings.');
+  }
+}
+</script>

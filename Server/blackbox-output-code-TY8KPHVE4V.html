@@ -1,0 +1,15 @@
+<!-- Replace booking buttons with: -->
+<button onclick="openWhatsAppBooking()">Book via WhatsApp</button>
+
+<script>
+function openWhatsAppBooking(){
+  const phone = "447123456789"; // Your WhatsApp number
+  const checkin = document.getElementById('checkin').value;
+  const checkout = document.getElementById('checkout').value;
+  const guests = document.getElementById('guests').value;
+  
+  const message = `Hi! I'd like to book Rest & Roam:\n📅 ${checkin} to ${checkout}\n👥 ${guests}\nCan you confirm availability?`;
+  
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+}
+</script>

@@ -1,0 +1,17 @@
+
+---
+
+## **🎯 DEPLOY IN 5 MINUTES:**
+
+```bash
+# 1. Create GitHub repo
+# 2. Paste all files above
+# 3. Terminal:
+git clone YOUR_REPO_URL
+cd canal-boat-booking
+npm install
+cp .env.example .env
+# Edit .env with YOUR Stripe/Google keys
+npm start
+
+# Visit: http://localhost:3000

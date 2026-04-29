@@ -1,0 +1,3 @@
+heroku create your-app-name
+heroku config:set STRIPE_SECRET_KEY=sk_test_...
+git push heroku main

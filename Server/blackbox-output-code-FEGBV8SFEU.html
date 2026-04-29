@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rest & Roam | Luxury Widebeam Boat Stays | Shardlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#163025;
+  --panel:#214235;
+  --panel-2:#2a4b3d;
+  --gold:#c9a96e;
+  --gold-soft:#e8d7b3;
+  --text:#f5f0e6;
+  --muted:rgba(245,240,230,.78);
+  --border:rgba(201,169,110,.18);
+  --radius:22px;
+  --shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img{display:block;width:100%;height:auto;}
+a{text-decoration:none;color:inherit;}
+.container{width:min(1240px,92%);margin:auto;}
+
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:500;
+  backdrop-filter:blur(12px);
+  background:rgba(8,14,9,.82);
+  border-bottom:1px solid var(--border);
+  transition:all .3s ease;
+}
+
+.nav-wrap{
+  min-height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;
+  color:var(--gold-soft);
+  font-weight:600;
+}
+
+nav ul{
+  display:flex;
+  gap:2rem;
+  list-style:none;
+  align-items:center;
+}
+
+nav li{
+  font-size:.95rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--muted);
+  cursor:pointer;
+  position:relative;
+}
+
+nav li::after{
+  content:'';
+  position:absolute;
+  bottom:-8px;
+  left:0;
+  width:0;
+  height:2px;
+  background:var(--gold);
+  transition:width .3s ease;
+}
+
+nav li:hover::after{ width:100%; }
+
+.nav-btn{
+  padding:14px 26px;
+  border:1px solid rgba(201,169,110,.35);
+  border-radius:999px;
+  color:var(--gold-soft);
+  transition:all .3s ease;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(201,169,110,.2);
+  z-index: 499;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+  width: 0%;
+  transition: width .3s ease;
+}
+
+/* HERO WITH PARALLAX */
+.hero{
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.60)),
+    url('images/rest-and-roam-luxury-widebeam-shardlow-sunset-hero.jpg') center/cover no-repeat fixed;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(45deg,rgba(201,169,110,.05),transparent);
+  animation: shimmer 8s infinite;
+}
+
+@keyframes shimmer{
+  0%,100%{transform:translateX(-100%);}
+  50%{transform:translateX(100%);}
+}
+
+.hero-content{
+  max-width:820px;
+  padding-top:100px;
+  position:relative;
+  z-index:2;
+}
+
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  color:var(--gold-soft);
+  font-size:1rem;
+  animation:fadeInUp 1s ease;
+}
+
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,7vw,7rem);
+  line-height:.92;
+  margin:18px 0;
+  animation:fadeInUp 1s ease .2s both;
+}
+
+.hero p{
+  font-size:1.15rem;
+  max-width:700px;
+  color:var(--muted);
+  animation:fadeInUp 1s ease .4s both;
+}
+
+/* ULTIMATE BOOKING CALENDAR */
+.booking-system{
+  margin-top:50px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:end;
+}
+
+.calendar-container{
+  background:rgba(10,18,12,.92);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+
+.calendar-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+
+.calendar-nav{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.calendar-nav button{
+  background:var(--panel-2);
+  border:1px solid var(--border);
+  color:var(--gold-soft);
+  padding:8px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:.9rem;
+}
+
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+  text-align:center;
+}
+
+.calendar-day{
+  padding:12px 8px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .3s ease;
+  font-weight:500;
+  font-size:.95rem;
+  position:relative;
+}
+
+.calendar-day:hover{
+  background:var(--gold);
+  color:#111;
+  transform:scale(1.05);
+}
+
+.calendar-day.available{ background:var(--panel-2); color:var(--gold-soft); }
+.calendar-day.booked{ background:rgba(120,120,120,.6); cursor:not-allowed; }
+.calendar-day.selected{ 
+  background:var(--gold-soft); 
+  color:#111; 
+  box-shadow:0 8px 25px rgba(232,215,179,.4);
+  transform:scale(1.1);
+}
+
+.calendar-day.today{ border:2px solid var(--gold); }
+
+.calendar-weekdays{
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:.8rem;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+.booking-summary{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+
+.summary-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;
+  margin-bottom:16px;
+  color:var(--gold-soft);
+}
+
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.summary-total{
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--gold-soft);
+  margin-top:20px;
+}
+
+.book-now-btn{
+  width:100%;
+  margin-top:24px;
+  padding:20px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--gold),#d4b47a);
+  color:#111;
+  font-weight:700;
+  font-size:1.1rem;
+  cursor:pointer;
+  box-shadow:0 12px 40px rgba(201,169,110,.3);
+  transition:all .4s cubic-bezier(.25,.46,.45,.94);
+}
+
+.book-now-btn:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 20px 50px rgba(201,169,110,.4);
+}
+
+section{padding:120px 0;}
+
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.3rem,5vw,4.5rem);
+  margin-bottom:10px;
+  position:relative;
+}
+
+.section-title::after{
+  content:'';
+  position:absolute;
+  bottom:-12px;
+  left:0;
+  width:60px;
+  height:3px;
+  background:var(--gold);
+}
+
+.section-sub{
+  color:var(--muted);
+  max-width:760px;
+  font-size:1.1rem;
+}
+
+.parallax-bg{
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  z-index:-1;
+}
+
+.soft-background{
+  position:relative;
+  overflow:hidden;
+}
+
+.soft-background::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(rgba(10,18,12,0.72), rgba(10,18,12,0.72));
+  z-index:0;
+}
+
+.cards,
+.reviews,
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:28px;
+  margin-top:40px;
+  position:relative;
+  z-index:2;
+}
+
+.card,
+.review{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:all .5s cubic-bezier(.25,.46,.45,.94);
+  position:relative;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+  transform:scaleX(0);
+  transition:transform .5s ease;
+}
+
+.card:hover::before{ transform:scaleX(1); }
+
+.card:hover{
+  transform:translateY(-12px) rotateX(2deg);
+  box-shadow:0 35px 80px rgba(0,0,0,.35);
+  border-color:rgba(201,169,110,.4);
+}
+
+.card-content,
+.review{
+  padding:32px;
+}
+
+.price{
+  font-size:2.2rem;
+  color:var(--gold-soft);
+  font-weight:700;
+  margin:12px 0;
+  font-family:'Cormorant Garamond',serif;
+}
+
+.card img{
+  height:220px;
+  object-fit:cover;
+  transition:transform .6s ease;
+}
+
+.card:hover img{ transform:scale(1.05); }
+
+.gallery{
+  grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+}
+
+.gallery img{
+  height:420px;
+  object-fit:cover;
+  border-radius:var(--radius);
+  transition:all .6s cubic-bezier(.25,.46,.45,.94);
+  box-shadow:var(--shadow);
+}
+
+.gallery img:hover{
+  transform:scale(1.05) rotate(1deg);
+  box-shadow:0 30px 80px rgba(0,0,0,.4);
+}
+
+.sticky-book-now{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:999;
+  background:linear-gradient(135deg,var(--gold),#d4b47a);
+  color:#111;
+  padding:18px 32px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:1.1rem;
+  box-shadow:0 20px 60px rgba(201,169,110,.3);
+  transition:all .4s ease;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{ box-shadow:0 20px 60px rgba(201,169,110,.3); }
+  50%{ box-shadow:0 25px 70px rgba(201,169,110,.45); }
+}
+
+.sticky-book-now:hover{
+  transform:translateY(-6px) scale(1.05);
+}
+
+/* REVEAL ANIMATIONS */
+.reveal{
+  opacity:0;
+  transform:translateY(60px);
+  transition:all 1s cubic-bezier(.25,.46,.45,.94);
+}
+
+.reveal.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.reveal:nth-child(odd).active{ animation-delay:.2s; }
+.reveal:nth-child(even).active{ animation-delay:.4s; }
+
+/* FAQ */
+.faq-item{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+  margin-top:20px;
+  cursor:pointer;
+  transition:all .4s ease;
+}
+
+.faq-item:hover{
+  border-color:var(--gold);
+  transform:translateX(8px);
+}
+
+.faq-answer{
+  display:none;
+  padding-top:20px;
+  color:var(--muted);
+  animation:slideDown .4s ease;
+}
+
+@keyframes slideDown{
+  from{ opacity:0; max-height:0; }
+  to{ opacity:1; max-height:200px; }
+}
+
+.faq-item.active .faq-answer{ display:block; }
+
+footer{
+  padding:100px 0 50px;
+  border-top:1px solid var(--border);
+  position:relative;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
+}
+
+footer h3{
+  margin-bottom:16px;
+  color:var(--gold-soft);
+  font-family:'Cormorant Garamond',serif;
+}
+
+/* MOBILE */
+@media(max-width:950px){
+  .booking-system{ grid-template-columns:1fr; }
+  .calendar-nav{ flex-wrap:wrap; gap:8px; }
+  .nav ul{ display:none; }
+  .gallery{ grid-template-columns:1fr; }
+  .hero{ background-attachment:scroll; }
+}
+
+@media(max-width:650px){
+  .calendar-grid{ gap:2px; }
+  .calendar-day{ padding:10px 4px; font-size:.85rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-wrap">
+    <div class="logo">Rest & Roam</div>
+    <ul>
+      <li onclick="scrollTo('availability')">Availability</li>
+      <li onclick="scrollTo('moorings')">Mooring Spots</li>
+      <li onclick="scrollTo('mystery')">Mystery Mooring</li>
+      <li onclick="scrollTo('gallery')">Gallery</li>
+      <li onclick="scrollTo('reviews')">Reviews</li>
+      <li onclick="scrollTo('contact')" class="nav-btn">Book Now</li>
+    </ul>
+  </div>
+</nav>
+
+<div class="progress-bar">
+  <div class="progress-fill"></div>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <p class="eyebrow">Luxury Widebeam Escapes • Shardlow</p>
+      <h1>Luxury Canal Boat Stays</h1>
+      <p>Premium waterside accommodation with boutique interiors, private mooring views, and the most intuitive direct booking experience in the UK.</p>
+
+      <!-- ULTIMATE INTERACTIVE CALENDAR -->
+      <div class="booking-system">
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h3 style="margin:0;font-family:'Cormorant Garamond',serif;color:var(--gold-soft);">November 2024</h3>
+            <div class="calendar-nav">
+              <button onclick="prevMonth()">‹</button>
+              <span id="currentMonth">November 2024</span>
+              <button onclick="nextMonth()">›</button>
+            </div>
+          </div>
+          
+          <div class="calendar-weekdays">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div>
+            <div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+          
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+
+        <div class="booking-summary">
+          <h3 class="summary-title">Your Escape</h3>
+          <div class="summary-row">
+            <span>Check-in:</span>
+            <span id="checkinDisplay">-</span>
+          </div>
+          <div class="summary-row">
+            <span>Check-out:</span>
+            <span id="checkoutDisplay">-</span>
+          </div>
+          <div class="summary-row">
+            <span>Nights:</span>
+            <span id="nightsDisplay">-</span>
+          </div>
+          <div class="summary-row">
+            <span>Guests:</span>
+            <select id="guests" style="background:var(--panel-2);border:1px solid var(--border);padding:8px 12px;border-radius:8px;color:var(--text);">
+              <option>2 Guests</option>
+              <option>4 Guests</option>
+              <option>6 Guests</option>
+            </select>
+          </div>
+          <div class="summary-row" style="font-weight:600;font-size:1.3rem;">
+            <span>Total:</span>
+            <span id="totalPrice" style="color:var(--gold-soft);">£0</span>
+          </div>
+          <button class="book-now-btn" onclick="confirmBooking()" id="bookBtn" disabled>Secure Your Stay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="availability" class="soft-background">
+  <div class="container">
+    <h2 class="section-title reveal">Dynamic Pricing</h2>
+    <p class="section-sub reveal">Real-time rates based on your selection above. Best availability shown instantly.</p>
+
+    <div class="cards">
+      <div class="card reveal">
+        <img src="images/rest-and-roam-widebeam-under-stone-bridge.jpg" alt="Widebeam under bridge">
+        <div class="card-content">
+          <h3>Midweek Serenity</h3>
+          <div class="price" data-rate="245">£245 / night</div>
+          <p>Perfect for peaceful escapes and couples retreats.</p>
+          <button class="book-now-btn" style="margin-top:16px;font-size:1rem;padding:14px;">Reserve</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <img src="images/rest-and-roam-widebeam-lock-sunset.jpg" alt="Widebeam sunset">
+        <div class="card-content">
+          <h3>Weekend Luxury</h3>
+          <div class="price" data-rate="325">£325 / night</div>
+          <p>Peak weekend premium with highest demand.</p>
+          <button class="book-now-btn" style="margin-top:16px;font-size:1rem;padding:14px;">Reserve</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <img src="images/rest-and-roam-historic-shardlow-waterfront.jpg" alt="Shardlow waterfront">
+        <div class="card-content">
+          <h3>Weekly Escape</h3>
+          <div class="price" data-rate="1450">From £1,450 / week</div>
+          <p>Best value for extended luxury waterside stays.</p>
+          <button class="book-now-btn" style="margin-top:16px;font-size:1rem;padding:14px;">Reserve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="moorings" class="soft-background">
+  <div class="container">
+    <h2 class="section-title reveal">6 Premium Moorings</h2>
+    <p class="section-sub reveal">Hand-selected widebeam locations with pubs, walks & luxury surroundings.</p>
+
+    <div class="cards">
+      <div class="card reveal"><div class="card-content"><h3>Shardlow Basin</h3><p>Historic marina, waterfront pubs, golden hour views.</p></div></div>
+      <div class="card reveal"><div class="card-content"><h3>Sawley Cut</h3><p>Peaceful walks, village access, open countryside.</p></div></div>
+      <div class="card reveal"><div class="card-content"><h3>Derwent Mouth</h3><p>Lockside serenity, rural charm, perfect evenings.</p></div></div>
+      <div class="card reveal"><div class="card-content"><h3>Weston-on-Trent</h3><p>Charming village, excellent pubs, premium calm.</p></div></div>
+      <div class="card reveal"><div class="card-content"><h3>Willington Reach</h3><p>Family-friendly walks, shops, visitor favorite.</p></div></div>
+      <div class="card reveal"><div class="card-content"><h3>Mercia Marina</h3><p>Luxury marina lifestyle, boutique perfection.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="mystery" class="reveal">
+  <div class="container">
+    <h2 class="section-title">Mystery Mooring Magic</h2>
+    <p class="section-sub">Your exact location revealed 48hrs before arrival. Every stay feels exclusive.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-content">
+          <h3>Why It Works</h3>
+          <p>Surprise + premium locations = unforgettable memories.</p>
+          <button class="book-now-btn" style="margin-top:20px;">Book Mystery Stay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="container">
+    <h2 class="section-title reveal">Visual Escape</h2>
+    <div class="gallery">
+      <img src="images/rest-and-roam-widebeam-under-stone-bridge.jpg" class="reveal" alt="Stone bridge">
+      <img src="images/rest-and-roam-widebeam-lock-sunset.jpg" class="reveal" alt="Lock sunset">
+      <img src="images/rest-and-roam-shardlow-pub-waterside-evening.jpg" class="reveal" alt="Waterside pub">
+      <img src="images/rest-and-roam-historic-shardlow-waterfront.jpg" class="reveal" alt="Shardlow waterfront">
+      <img src="images/rest-and-roam-canal-walk-nearby.jpg" class="reveal" alt="Canal walk">
+      <img src="images/rest-and-roam-luxury-widebeam-shardlow-sunset-hero.jpg" class="reveal" alt="Luxury sunset">
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="soft-background">
+  <div class="container">
+    <h2 class="section-title reveal">What Guests Say</h2>
+    <div class="reviews">
+      <div class="review reveal">"Better than any hotel. Seamless booking, pure luxury." <strong>— Sarah, Derby</strong></div>
+      <div class="review reveal">"Incredible interiors. The mystery mooring was magic." <strong>— James, Nottingham</strong></div>
+      <div class="review reveal">"Easiest luxury booking ever. Boat exceeded dreams." <strong>— Emily, Sheffield</strong></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title reveal">FAQ</h2>
+    <div class="faq-item reveal">
+      <h3>🕒 When is my mooring revealed?</h3>
+      <div class="faq-answer">48 hours before arrival for the perfect surprise.</div>
+    </div>
+    <div class="faq-item reveal">
+      <h3>🚗 Parking included?</h3>
+      <div class="faq-answer">Yes! Private parking with arrival instructions.</div>
+    </div>
+    <div class="faq-item reveal">
+      <h3>🐕 Dog friendly?</h3>
+      <div class="faq-answer">Yes! Perfect canal walks nearby.</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="container footer-grid">
+    <div>
+      <h3>Rest & Roam</h3>
+      <p>Luxury widebeam stays • Direct booking specialist</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p>hello@restandroam.co.uk</p>
+      <p>WhatsApp: 07XXX XXX XXX</p>
+      <p>Private parking included</p>
+    </div>
+    <div>
+      <h3>Stay Details</h3>
+      <p>🐕 Dog friendly</p>
+      <p>📅 Check-in 3PM</p>
+      <p>📤 Check-out 10AM</p>
+    </div>
+  </div>
+</footer>
+
+<a href="#availability" class="sticky-book-now">Book Now</a>
+
+<script>
+/* ULTIMATE CALENDAR SYSTEM */
+let currentMonth = 11; // November 2024
+let currentYear = 2024;
+let selectedCheckin = null;
+let selectedCheckout = null;
+const bookedDates = [ // Your real booked dates here
+  '2024-11-08','2024-11-09','2024-11-10','2024-11-15','2024-11-16',
+  '2024-11-22','2024-11-23','2024-11-29','2024-11-30'
+];
+
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function generateCalendar(){
+  const grid = document.getElementById('calendarGrid');
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const today = new Date();
+  
+  let html = '';
+  
+  // Empty cells for days before month starts
+  for(let i = 0; i < firstDay; i++){
+    html += '<div></div>';
+  }
+  
+  for(let day = 1; day <= daysInMonth; day++){
+    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const isBooked = bookedDates.includes(dateStr);
+    const isToday = dateStr === today.toISOString().split('T')[0];
+    const isSelected = (selectedCheckin && dateStr === selectedCheckin) || (selectedCheckout && dateStr === selectedCheckout);
+    
+    const dayClass = isBooked ? 'booked' : 
+                    (isSelected ? 'selected' : 
+                    (isToday ? 'today' : 'available'));
+    
+    html += `<div class="calendar-day ${dayClass}" data-date="${dateStr}" data-day="${day}">${day}</div>`;
+  }
+  
+  grid.innerHTML = html;
+  
+  // Add click events
+  document.querySelectorAll('.calendar-day.available').forEach(day => {
+    day.addEventListener('click', function(){
+      const date = this.dataset.date;
+      if(!selectedCheckin){
+        selectedCheckin = date;
+        updateSummary();
+      } else if(!selectedCheckout || new Date(date) > new Date(selectedCheckin)){
+        selectedCheckout = date;
+        updateSummary();
+      } else {
+        selectedCheckin = date;
+        selectedCheckout = null;
+        updateSummary();
+      }
+    });
+  });
+  
+  document.getElementById('currentMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+}
+
+function prevMonth(){
+  currentMonth--;
+  if(currentMonth < 0){
+    currentMonth = 11;
+    currentYear--;
+  }
+  generateCalendar();
+}
+
+function nextMonth(){
+  currentMonth++;
+  if(currentMonth > 11){
+    currentMonth = 0;
+    currentYear++;
+  }
+  generateCalendar();
+}
+
+function updateSummary(){
+  document.getElementById('checkinDisplay').textContent = selectedCheckin ? new Date(selectedCheckin).toLocaleDateString('en-GB', {weekday:'short', month:'short', day:'numeric'}) : '-';
+  document.getElementById('checkoutDisplay').textContent = selectedCheckout ? new Date(selectedCheckout).toLocaleDateString('en-GB', {weekday:'short', month:'short', day:'numeric'}) : '-';
+  
+  if(selectedCheckin && selectedCheckout){
+    const checkin = new Date(selectedCheckin);
+    const checkout = new Date(selectedCheckout);
+    const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+    
+    // Smart weekend pricing
+    let total = 0;
+    let weekendNights = 0;
+    for(let d = new Date(checkin); d < checkout; d.setDate(d.getDate() + 1)){
+      const day = d.getDay();
+      if(day === 0 || day === 6) weekendNights++;
+    }
+    
+    const weekdayNights = nights - weekendNights;
+    total = (weekdayNights * 245) + (weekendNights * 325);
+    
+    document.getElementById('nightsDisplay').textContent = `${nights} nights`;
+    document.getElementById('totalPrice').textContent = `£${total.toLocaleString()}`;
+    document.getElementById('bookBtn').disabled = false;
+  } else {
+    document.getElementById('nightsDisplay').textContent = '-';
+    document.getElementById('totalPrice').textContent = '£0';
+    document.getElementById('bookBtn').disabled = true;
+  }
+}
+
+function confirmBooking(){
+  if(selectedCheckin && selectedCheckout){
+    const guests = document.getElementById('guests').value;
+    const message = `🚤 Rest & Roam Booking Request\n\n📅 ${new Date(selectedCheckin).toLocaleDateString('en-GB')} → ${new Date(selectedCheckout).toLocaleDateString('en-GB')}\n👥 ${guests}\n💰 Final price confirmed\n\nReady to secure?`;
+    
+    // WhatsApp + Email backup
+    window.open(`https://wa.me/447123456789?text=${encodeURIComponent(message)}`, '_blank');
+    
+    // Optional: Email confirmation
+    const emailLink = `mailto:hello@restandroam.co.uk?subject=Booking%20Request&body=${encodeURIComponent(message)}`;
+    setTimeout(() => window.location.href = emailLink, 1000);
+  }
+}
+
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
+
+// SMOOTH SCROLL PROGRESS
+window.addEventListener('scroll', () => {
+  const scroll = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.querySelector('.progress-fill').style.width = scroll + '%';
+});
+
+// PERFECT REVEAL ANIMATIONS
+const reveals = document.querySelectorAll('.reveal');
+function revealOnScroll(){
+  const trigger = window.innerHeight * 0.85;
+  reveals.forEach((item, index) => {
+    const top = item.getBoundingClientRect().top;
+    if(top < trigger){
+      item.classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+// FAQ TOGGLE
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('active');
+  });
+});
+
+// INITIALIZE
+generateCalendar();
+updateSummary();
+</script>
+
+</body>
+</html>

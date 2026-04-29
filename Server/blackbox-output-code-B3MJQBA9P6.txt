@@ -1,0 +1,8 @@
+canal-boat-booking/
+├── public/
+│   └── index.html          # Your complete frontend
+├── server.js              # Backend API
+├── package.json           # Dependencies
+├── .env.example           # Environment vars
+├── .gitignore
+└── README.md

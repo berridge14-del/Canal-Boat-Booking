@@ -1,0 +1,112 @@
+const express = require('express');
+const cors = require('cors');
+const Stripe = require('stripe')('sk_test_YOUR_STRIPE_SECRET_KEY');
+const { google } = require('googleapis');
+const cron = require('node-cron');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public')); // Serve your HTML
+
+// Google Calendar Setup
+const oauth2Client = new google.auth.OAuth2(
+  'YOUR_GOOGLE_CLIENT_ID',
+  'YOUR_GOOGLE_CLIENT_SECRET',
+  'https://yourdomain.com/oauth2callback'
+);
+
+const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+
+// Get access token (store securely)
+const ACCESS_TOKEN = 'YOUR_GOOGLE_ACCESS_TOKEN';
+oauth2Client.setCredentials({ access_token: ACCESS_TOKEN });
+
+// API Routes
+app.get('/api/availability/:month/:year', async (req, res) => {
+  try {
+    const { month, year } = req.params;
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
+
+    const events = await calendar.events.list({
+      calendarId: 'primary',
+      timeMin: startDate.toISOString(),
+      timeMax: endDate.toISOString(),
+      singleEvents: true,
+      orderBy: 'startTime',
+    });
+
+    const bookedDates = events.data.items.map(event => 
+      event.start.date || event.start.dateTime.split('T')[0]
+    );
+
+    res.json({ bookedDates });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/create-booking', async (req, res) => {
+  const { checkin, checkout, guests, amount, customerEmail, customerName } = req.body;
+
+  try {
+    // 1. Create Stripe Payment Intent
+    const paymentIntent = await Stripe.paymentIntents.create({
+      amount: amount * 100, // pence
+      currency: 'gbp',
+      metadata: {
+        checkin, checkout, guests, customerEmail, customerName
+      },
+      receipt_email: customerEmail,
+    });
+
+    // 2. Block Google Calendar
+    const event = {
+      summary: `BOOKING: ${customerName} - ${guests}`,
+      description: `Check-in: ${checkin}\nCheck-out: ${checkout}\nEmail: ${customerEmail}`,
+      start: { date: checkin },
+      end: { date: checkout },
+      colorId: 11 // Red = Booked
+    };
+
+    await calendar.events.insert({
+      calendarId: 'primary',
+      resource: event,
+    });
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+      bookingId: paymentIntent.id
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Stripe Webhook for payment confirmation
+app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+
+  try {
+    event = Stripe.webhooks.constructEvent(req.body, sig, 'whsec_YOUR_WEBHOOK_SECRET');
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  if (event.type === 'payment_intent.succeeded') {
+    const paymentIntent = event.data.object;
+    console.log('Payment succeeded:', paymentIntent.id);
+    
+    // Send confirmation email (integrate SendGrid/Mailgun)
+    // await sendConfirmationEmail(paymentIntent.metadata);
+  }
+
+  res.json({received: true});
+});
+
+// Health check
+app.get('/health', (req, res) => res.send('OK'));
+
+app.listen(3000, () => console.log('Server running on port 3000'));
