@@ -395,11 +395,38 @@ footer { padding: 80px 6% 40px; border-top: 1px solid var(--gold-border); }
 .mbar-price { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold-light); font-weight:700; }
 .mbar-btn { padding:13px 26px; background:linear-gradient(135deg,var(--gold),#d4b47a); color:#111; font-weight:700; font-size:0.88rem; border:none; border-radius:999px; cursor:pointer; white-space:nowrap; flex-shrink:0; letter-spacing:0.04em; }
 
-@media(max-width:900px) {
-  #mobileBar { display:flex; }
-  .float-wa { bottom:84px; right:20px; width:50px; height:50px; }
-  #btt { bottom:84px; left:20px; }
+/* ── LOADER ARCH DRAW ── */
+.loader-inner { display:flex; flex-direction:column; align-items:center; }
+.loader-arch { color:var(--gold); margin-bottom:18px; }
+.loader-arch .arch-outline { stroke-dasharray:200; stroke-dashoffset:200; animation:drawStroke 1.0s cubic-bezier(0.4,0,0.2,1) forwards 0.1s; }
+.loader-arch .arch-div    { stroke-dasharray:55;  stroke-dashoffset:55;  animation:drawStroke 0.4s ease forwards 0.95s; }
+.loader-arch .arch-base   { stroke-dasharray:45;  stroke-dashoffset:45;  animation:drawStroke 0.3s ease forwards 1.25s; }
+@keyframes drawStroke { to { stroke-dashoffset:0; } }
+
+/* ── SPLIT CURTAIN ── */
+#curtain-t, #curtain-b { position:fixed; left:0; right:0; background:var(--bg); z-index:9998; transition:transform 1.05s cubic-bezier(0.76,0,0.24,1); }
+#curtain-t { top:0;    height:50.2%; }
+#curtain-b { bottom:0; height:50.2%; }
+#curtain-t.open { transform:translateY(-100%); }
+#curtain-b.open { transform:translateY(100%); }
+
+/* ── H1 LINE REVEAL ── */
+.h1-line { display:block; overflow:hidden; }
+.h1-line span { display:block; opacity:0; transform:translateY(70%); animation:lineUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
+.h1-line:nth-child(1) span { animation-delay:2.4s; }
+.h1-line:nth-child(2) span { animation-delay:2.55s; }
+.h1-line:nth-child(3) span { animation-delay:2.7s; }
+@keyframes lineUp { to { opacity:1; transform:translateY(0); } }
+
+/* ── HERO PARTICLES ── */
+.hero-particle { position:absolute; background:var(--gold); border-radius:50%; pointer-events:none; z-index:1; animation:particleFloat ease-in-out infinite; }
+@keyframes particleFloat {
+  0%,100% { transform:translateY(0) translateX(0); }
+  33%      { transform:translateY(-28px) translateX(10px); }
+  66%      { transform:translateY(-12px) translateX(-7px); }
 }
+.hero-shimmer { position:absolute; top:0; left:-50%; width:25%; height:100%; background:linear-gradient(90deg,transparent,rgba(201,169,110,0.04),transparent); z-index:1; pointer-events:none; animation:shimmerPass 9s ease-in-out infinite 3.5s; }
+@keyframes shimmerPass { 0%{left:-50%;} 100%{left:130%;} }
 </style>
 </head>
 <body>
