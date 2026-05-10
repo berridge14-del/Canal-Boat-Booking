@@ -1,2 +1,991 @@
 <!DOCTYPE html>
-<html
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Luxury widebeam canal boat stays on England's finest waterways. Mystery moorings, direct booking from £245/night.">
+<title>Rest & Roam | Luxury Widebeam Canal Stays | Shardlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a1a10;
+  --surface: #111f17;
+  --surface-2: #182d1f;
+  --surface-3: #1f3828;
+  --gold: #c9a96e;
+  --gold-light: #e8d7b3;
+  --gold-dim: rgba(201,169,110,0.12);
+  --gold-border: rgba(201,169,110,0.2);
+  --text: #f5f0e6;
+  --muted: rgba(245,240,230,0.6);
+  --muted-2: rgba(245,240,230,0.35);
+  --radius: 18px;
+  --radius-lg: 28px;
+  --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+  --shadow: 0 30px 70px rgba(0,0,0,0.35);
+  --shadow-gold: 0 20px 50px rgba(201,169,110,0.18);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+img { display: block; width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ── LOADER ── */
+#loader {
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 9999; transition: opacity 0.7s var(--ease), visibility 0.7s;
+}
+#loader.out { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-brand { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold-light); letter-spacing: 0.08em; opacity: 0; animation: lIn 0.9s var(--ease) 0.2s forwards; }
+.loader-track { width: 180px; height: 2px; background: var(--gold-dim); margin: 20px auto 0; border-radius: 2px; overflow: hidden; }
+.loader-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--gold-light)); animation: lFill 1.4s var(--ease) 0.4s forwards; }
+@keyframes lIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+@keyframes lFill { from { width:0; } to { width:100%; } }
+
+/* ── PROGRESS ── */
+#prog { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg,var(--gold),var(--gold-light)); z-index: 800; width: 0; pointer-events: none; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 0 6%; transition: background 0.4s var(--ease), box-shadow 0.4s;
+}
+nav.solid {
+  background: rgba(10,26,16,0.94); backdrop-filter: blur(24px);
+  box-shadow: 0 1px 0 var(--gold-border);
+}
+.nav-inner { max-width: 1280px; margin: auto; height: 84px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--gold-light); font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; }
+.logo span { font-style: italic; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
+.nav-links a { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+.nav-links a:hover { color: var(--gold-light); }
+.nav-links a:hover::after { width: 100%; }
+.nav-btn { padding: 11px 22px; border: 1px solid var(--gold-border); border-radius: 999px; color: var(--gold-light) !important; transition: all 0.3s !important; }
+.nav-btn:hover { background: var(--gold) !important; color: #111 !important; border-color: var(--gold) !important; }
+.nav-btn::after { display: none !important; }
+.burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; z-index: 10; }
+.burger span { display: block; width: 24px; height: 1.5px; background: var(--gold-light); transition: all 0.3s; }
+.mobile-menu { display: none; position: fixed; inset: 0; background: rgba(10,26,16,0.98); backdrop-filter: blur(20px); z-index: 400; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-light); }
+
+/* ── HERO ── */
+.hero { min-height: 100vh; display: flex; align-items: flex-end; position: relative; overflow: hidden; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=2000&q=85') center/cover no-repeat;
+  transform: scale(1.06); transition: transform 9s var(--ease);
+}
+.hero-bg.pan { transform: scale(1) translateX(1%); }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(10,26,16,0.15) 0%, rgba(10,26,16,0.5) 50%, rgba(10,26,16,0.97) 100%); }
+.hero-body { position: relative; z-index: 2; width: 100%; max-width: 1280px; margin: auto; padding: 0 6% 90px; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 0.78rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 22px; opacity: 0; animation: up 0.8s var(--ease) 1.6s forwards; }
+.hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--gold); }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem,7vw,6.5rem); line-height: 1.0; margin-bottom: 28px; opacity: 0; animation: up 0.8s var(--ease) 1.8s forwards; }
+.hero h1 em { font-style: italic; color: var(--gold-light); }
+.hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 520px; margin-bottom: 44px; opacity: 0; animation: up 0.8s var(--ease) 2s forwards; }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: up 0.8s var(--ease) 2.2s forwards; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 16px 34px; border-radius: 999px; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; border: none; transition: all 0.35s var(--ease); }
+.btn-gold { background: linear-gradient(135deg,var(--gold),#d4b47a); color: #111; box-shadow: var(--shadow-gold); }
+.btn-gold:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 30px 60px rgba(201,169,110,0.3); }
+.btn-outline { background: rgba(245,240,230,0.07); color: var(--text); border: 1px solid rgba(245,240,230,0.18); backdrop-filter: blur(8px); }
+.btn-outline:hover { background: rgba(245,240,230,0.14); transform: translateY(-2px); }
+
+.hero-badges { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 48px; opacity: 0; animation: up 0.8s var(--ease) 2.4s forwards; }
+.hero-badge { display: flex; align-items: center; gap: 10px; }
+.badge-pip { width: 34px; height: 34px; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 10px; display: grid; place-items: center; font-size: 1rem; flex-shrink: 0; }
+.badge-text { font-size: 0.82rem; color: var(--muted); line-height: 1.3; }
+.badge-text strong { display: block; color: var(--text); font-size: 0.9rem; }
+
+.scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeIn 1s ease 3s forwards; }
+.scroll-hint-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted-2); }
+.scroll-line { width: 1px; height: 44px; background: linear-gradient(to bottom,var(--gold),transparent); animation: pulse-line 1.6s ease infinite; }
+@keyframes pulse-line { 0%,100%{opacity:0.4;transform:scaleY(0.6);} 50%{opacity:1;transform:scaleY(1);} }
+@keyframes up { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:none;} }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+/* ── STATS STRIP ── */
+.stats { background: var(--surface); border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border); }
+.stats-inner { max-width: 1280px; margin: auto; padding: 32px 6%; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; }
+.stat { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold-light); font-weight: 700; line-height: 1; }
+.stat-label { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+/* ── SECTIONS ── */
+.section { padding: 110px 6%; }
+.section-inner { max-width: 1280px; margin: auto; }
+.section-tag { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.section-tag::before { content:''; width:28px; height:1px; background:var(--gold); }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3.6rem); line-height: 1.15; margin-bottom: 18px; }
+.section-title em { font-style: italic; color: var(--gold-light); }
+.section-sub { color: var(--muted); font-size: 1.05rem; max-width: 600px; }
+
+/* ── BOOKING ── */
+#booking { background: var(--surface); }
+.booking-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; margin-top: 48px; align-items: start; }
+.calendar-wrap { background: var(--surface-2); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 32px; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.cal-month { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold-light); }
+.cal-nav { display: flex; gap: 8px; }
+.cal-nav button { width: 38px; height: 38px; background: var(--surface-3); border: 1px solid var(--gold-border); color: var(--gold-light); border-radius: 10px; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; display: grid; place-items: center; }
+.cal-nav button:hover { background: var(--gold-dim); border-color: var(--gold); }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; gap: 4px; margin-bottom: 10px; }
+.cal-weekdays span { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); padding: 6px 0; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.cal-day { padding: 11px 6px; text-align: center; border-radius: 10px; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s; position: relative; color: var(--text); }
+.cal-day.empty { cursor: default; }
+.cal-day.past { color: var(--muted-2); cursor: not-allowed; }
+.cal-day.booked { background: rgba(255,255,255,0.04); color: var(--muted-2); cursor: not-allowed; }
+.cal-day.booked::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:22px; height:1px; background:var(--muted-2); }
+.cal-day.available:hover { background: var(--gold-dim); color: var(--gold-light); }
+.cal-day.today { border: 1px solid rgba(201,169,110,0.4); }
+.cal-day.check-in, .cal-day.check-out { background: var(--gold); color: #111; font-weight: 700; }
+.cal-day.in-range { background: var(--gold-dim); color: var(--gold-light); border-radius: 0; }
+.cal-day.check-in { border-radius: 10px 0 0 10px; }
+.cal-day.check-out { border-radius: 0 10px 10px 0; }
+.cal-day.check-in.check-out { border-radius: 10px; }
+.cal-legend { display: flex; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
+.leg-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--muted); }
+.leg-dot { width: 10px; height: 10px; border-radius: 3px; }
+.leg-dot.gold { background: var(--gold); }
+.leg-dot.booked { background: rgba(255,255,255,0.15); }
+.leg-dot.range { background: var(--gold-dim); border: 1px solid var(--gold-border); }
+
+.booking-summary { background: var(--surface-2); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 32px; position: sticky; top: 100px; }
+.summary-head { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold-light); margin-bottom: 24px; }
+.s-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--gold-border); font-size: 0.9rem; }
+.s-row:last-of-type { border-bottom: none; }
+.s-val { color: var(--gold-light); font-weight: 600; }
+.guest-ctrl { display: flex; align-items: center; gap: 12px; }
+.guest-btn { width: 30px; height: 30px; background: var(--surface-3); border: 1px solid var(--gold-border); color: var(--gold-light); border-radius: 8px; cursor: pointer; font-size: 1rem; display: grid; place-items: center; transition: all 0.2s; }
+.guest-btn:hover { background: var(--gold-dim); border-color: var(--gold); }
+.price-total { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--gold-border); }
+.price-total-label { font-size: 0.85rem; color: var(--muted); }
+.price-total-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold-light); font-weight: 700; }
+.book-btn { width: 100%; margin-top: 20px; padding: 18px; background: linear-gradient(135deg,var(--gold),#d4b47a); border: none; border-radius: 14px; color: #111; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.35s var(--ease); letter-spacing: 0.04em; box-shadow: var(--shadow-gold); }
+.book-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 24px 50px rgba(201,169,110,0.28); }
+.book-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.book-note { text-align: center; font-size: 0.75rem; color: var(--muted); margin-top: 12px; }
+
+/* ── PRICING CARDS ── */
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+.price-card { background: var(--surface); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 36px 30px; position: relative; overflow: hidden; transition: all 0.4s var(--ease); }
+.price-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); transform:scaleX(0); transform-origin:left; transition:transform 0.4s var(--ease); }
+.price-card:hover { transform: translateY(-8px); border-color: rgba(201,169,110,0.4); box-shadow: var(--shadow); }
+.price-card:hover::before { transform: scaleX(1); }
+.price-card.featured { background: var(--surface-2); border-color: rgba(201,169,110,0.4); }
+.price-card.featured::before { transform: scaleX(1); }
+.featured-badge { position: absolute; top: 20px; right: 20px; background: var(--gold); color: #111; font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; letter-spacing: 0.1em; text-transform: uppercase; }
+.pc-label { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.pc-price { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--gold-light); font-weight: 700; line-height: 1; margin-bottom: 4px; }
+.pc-per { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; }
+.pc-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.pc-features li { font-size: 0.88rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+.pc-features li::before { content:'✓'; color: var(--gold); font-weight: 700; }
+
+/* ── MOORINGS ── */
+#moorings { background: var(--surface); }
+.moorings-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 48px; }
+.mooring-card { background: var(--bg); border: 1px solid var(--gold-border); border-radius: var(--radius); padding: 28px 24px; transition: all 0.35s var(--ease); cursor: default; }
+.mooring-card:hover { border-color: rgba(201,169,110,0.5); transform: translateY(-6px); box-shadow: var(--shadow); background: var(--surface-2); }
+.mooring-num { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--gold); margin-bottom: 8px; letter-spacing: 0.1em; }
+.mooring-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text); margin-bottom: 10px; }
+.mooring-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+.mooring-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.mooring-tag { font-size: 0.72rem; padding: 4px 12px; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 999px; color: var(--gold-light); letter-spacing: 0.08em; }
+
+/* ── GALLERY ── */
+.gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: 280px 280px; gap: 14px; margin-top: 48px; }
+.gallery-grid .g-img:nth-child(1) { grid-row: span 2; }
+.gallery-grid .g-img:nth-child(4) { grid-column: span 2; }
+.g-img { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+.g-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
+.g-img:hover img { transform: scale(1.07); }
+.g-img-overlay { position: absolute; inset: 0; background: rgba(10,26,16,0); display: grid; place-items: center; transition: background 0.3s; }
+.g-img:hover .g-img-overlay { background: rgba(10,26,16,0.35); }
+.g-img-overlay span { opacity: 0; color: var(--gold-light); font-size: 1.5rem; transition: opacity 0.3s; }
+.g-img:hover .g-img-overlay span { opacity: 1; }
+
+/* Lightbox */
+#lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; place-items: center; backdrop-filter: blur(10px); }
+#lightbox.open { display: grid; }
+#lightbox img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius); object-fit: contain; }
+#lb-close { position: absolute; top: 24px; right: 28px; color: var(--text); font-size: 2rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s; line-height: 1; }
+#lb-close:hover { opacity: 1; }
+#lb-prev, #lb-next { position: absolute; top: 50%; transform: translateY(-50%); color: var(--gold-light); font-size: 2.5rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s; padding: 12px; }
+#lb-prev { left: 20px; }
+#lb-next { right: 20px; }
+#lb-prev:hover, #lb-next:hover { opacity: 1; }
+
+/* ── MYSTERY SECTION ── */
+.mystery { background: var(--surface-2); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 60px; text-align: center; margin: 0 6%; }
+.mystery-icon { font-size: 3.5rem; margin-bottom: 24px; animation: float 3s ease infinite; }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+.mystery-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3rem); margin-bottom: 18px; }
+.mystery-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin: 40px 0 48px; text-align: left; }
+.mstep { background: var(--surface-3); border: 1px solid var(--gold-border); border-radius: var(--radius); padding: 24px; }
+.mstep-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); line-height: 1; margin-bottom: 10px; }
+.mstep-title { font-weight: 600; margin-bottom: 6px; }
+.mstep-desc { font-size: 0.85rem; color: var(--muted); }
+
+/* ── REVIEWS ── */
+.reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+.review-card { background: var(--surface); border: 1px solid var(--gold-border); border-radius: var(--radius-lg); padding: 32px; transition: all 0.35s var(--ease); }
+.review-card:hover { border-color: rgba(201,169,110,0.4); transform: translateY(-6px); box-shadow: var(--shadow); }
+.stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 16px; }
+.review-text { font-size: 0.95rem; line-height: 1.75; color: var(--muted); font-style: italic; margin-bottom: 20px; position: relative; }
+.review-text::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold-dim); position: absolute; top: -20px; left: -8px; line-height: 1; }
+.review-author { display: flex; align-items: center; gap: 12px; }
+.review-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg,var(--gold),var(--surface-3)); display: grid; place-items: center; font-family: 'Playfair Display', serif; font-size: 1rem; color: #111; font-weight: 700; flex-shrink: 0; }
+.review-name { font-weight: 600; font-size: 0.9rem; }
+.review-location { font-size: 0.78rem; color: var(--muted); }
+
+/* ── AMENITIES ── */
+#amenities { background: var(--surface); }
+.amenities-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 48px; }
+.amenity { background: var(--bg); border: 1px solid var(--gold-border); border-radius: var(--radius); padding: 24px 20px; text-align: center; transition: all 0.3s; }
+.amenity:hover { background: var(--surface-2); border-color: rgba(201,169,110,0.4); transform: translateY(-4px); }
+.amenity-icon { font-size: 2rem; margin-bottom: 12px; }
+.amenity-label { font-size: 0.82rem; font-weight: 600; margin-bottom: 4px; }
+.amenity-desc { font-size: 0.75rem; color: var(--muted); }
+
+/* ── FAQ ── */
+.faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--surface); border: 1px solid var(--gold-border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.3s; }
+.faq-item.open { border-color: rgba(201,169,110,0.4); }
+.faq-q { padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 500; font-size: 0.95rem; gap: 16px; }
+.faq-arrow { color: var(--gold); font-size: 1.2rem; transition: transform 0.3s; flex-shrink: 0; }
+.faq-item.open .faq-arrow { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease); }
+.faq-a-inner { padding: 0 28px 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.8; }
+
+/* ── WAITLIST ── */
+.waitlist-bar { background: var(--surface-2); border: 1px solid var(--gold-border); border-radius: var(--radius); padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
+.waitlist-text h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 6px; }
+.waitlist-text p { color: var(--muted); font-size: 0.9rem; }
+.waitlist-form { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
+.waitlist-form input { padding: 14px 18px; background: var(--bg); border: 1px solid var(--gold-border); border-radius: 999px; color: var(--text); font-size: 0.9rem; width: 260px; outline: none; transition: border-color 0.2s; }
+.waitlist-form input:focus { border-color: var(--gold); }
+.waitlist-form input::placeholder { color: var(--muted-2); }
+
+/* ── FOOTER ── */
+footer { padding: 80px 6% 40px; border-top: 1px solid var(--gold-border); }
+.footer-inner { max-width: 1280px; margin: auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 60px; }
+.footer-brand .logo { font-size: 1.8rem; margin-bottom: 14px; }
+.footer-brand p { color: var(--muted); font-size: 0.88rem; max-width: 280px; line-height: 1.8; }
+.footer-col h4 { color: var(--gold-light); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 18px; }
+.footer-col a, .footer-col p { display: block; color: var(--muted); font-size: 0.88rem; margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--gold-light); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid var(--gold-border); }
+.footer-copy { font-size: 0.8rem; color: var(--muted-2); }
+.footer-socials { display: flex; gap: 16px; }
+.social-icon { width: 36px; height: 36px; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 9px; display: grid; place-items: center; color: var(--gold-light); font-size: 0.9rem; transition: all 0.2s; }
+.social-icon:hover { background: var(--gold); color: #111; border-color: var(--gold); }
+
+/* ── FLOATING CTA ── */
+.float-wa { position: fixed; bottom: 28px; right: 28px; z-index: 700; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 8px 30px rgba(37,211,102,0.4); transition: all 0.3s var(--ease); }
+.float-wa:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 16px 40px rgba(37,211,102,0.5); }
+.float-wa svg { width: 28px; height: 28px; fill: white; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .amenities-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 900px) {
+  .booking-grid { grid-template-columns: 1fr; }
+  .booking-summary { position: static; }
+  .pricing-grid, .moorings-grid, .reviews-grid { grid-template-columns: 1fr 1fr; }
+  .mystery-steps { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-grid .g-img:nth-child(1) { grid-row: span 1; }
+  .gallery-grid .g-img:nth-child(4) { grid-column: span 1; }
+  .nav-links { display: none; }
+  .burger { display: flex; }
+}
+@media (max-width: 640px) {
+  .section { padding: 80px 5%; }
+  .pricing-grid, .moorings-grid, .reviews-grid, .amenities-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .hero-badges { gap: 16px; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  .waitlist-bar { flex-direction: column; text-align: center; }
+  .waitlist-form { width: 100%; justify-content: center; }
+  .waitlist-form input { width: 100%; }
+  .mystery { padding: 40px 24px; margin: 0 5%; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-brand">Rest &amp; Roam</div>
+    <div class="loader-track"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div id="prog"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="logo">Rest &amp; <span>Roam</span></div>
+    <ul class="nav-links">
+      <li><a href="#booking">Book</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#moorings">Moorings</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact" class="nav-btn">Reserve Now</a></li>
+    </ul>
+    <div class="burger" id="burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="logo" style="position:absolute;top:32px;left:6%;">Rest &amp; <span>Roam</span></div>
+  <div style="position:absolute;top:36px;right:6%;font-size:1.6rem;cursor:pointer;color:var(--gold-light);" onclick="toggleMenu()">✕</div>
+  <a href="#booking" onclick="toggleMenu()">Book a Stay</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="#moorings" onclick="toggleMenu()">Moorings</a>
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#reviews" onclick="toggleMenu()">Reviews</a>
+  <a href="#contact" onclick="toggleMenu()" class="btn btn-gold" style="font-family:'Playfair Display',serif;font-size:1.1rem;">Reserve Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-body">
+    <div class="hero-eyebrow">Shardlow, Derbyshire · Est. 2021</div>
+    <h1>Wake Up on<br>England's <em>Most Beautiful</em><br>Waterways</h1>
+    <p class="hero-sub">Handcrafted luxury widebeam stays with boutique interiors, mystery moorings, and direct booking — no middleman.</p>
+    <div class="hero-ctas">
+      <a href="#booking" class="btn btn-gold">Check Availability</a>
+      <a href="#gallery" class="btn btn-outline">View the Boat</a>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-badge">
+        <div class="badge-pip">⭐</div>
+        <div class="badge-text"><strong>4.9 / 5</strong>Guest Rating</div>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-pip">🐕</div>
+        <div class="badge-text"><strong>Dog Friendly</strong>Always welcome</div>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-pip">🅿</div>
+        <div class="badge-text"><strong>Free Parking</strong>Included</div>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-pip">⚡</div>
+        <div class="badge-text"><strong>Instant Book</strong>No waiting</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-hint-label">Scroll</span>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal"><div class="stat-num">4.9★</div><div class="stat-label">Guest Rating</div></div>
+    <div class="stat reveal reveal-delay-1"><div class="stat-num">120+</div><div class="stat-label">Happy Guests</div></div>
+    <div class="stat reveal reveal-delay-2"><div class="stat-num">6</div><div class="stat-label">Mooring Locations</div></div>
+    <div class="stat reveal reveal-delay-3"><div class="stat-num">£245</div><div class="stat-label">From per Night</div></div>
+    <div class="stat reveal reveal-delay-4"><div class="stat-num">48h</div><div class="stat-label">Mooring Reveal</div></div>
+  </div>
+</div>
+
+<!-- BOOKING SECTION -->
+<section class="section" id="booking">
+  <div class="section-inner">
+    <div class="section-tag reveal">Direct Booking</div>
+    <h2 class="section-title reveal">Choose <em>Your Dates</em></h2>
+    <p class="section-sub reveal">Real-time availability. Weekday and weekend pricing applied automatically.</p>
+    <div class="booking-grid">
+      <div class="calendar-wrap reveal">
+        <div class="cal-header">
+          <div class="cal-month" id="calMonth">May 2026</div>
+          <div class="cal-nav">
+            <button onclick="prevMonth()" title="Previous month">‹</button>
+            <button onclick="nextMonth()" title="Next month">›</button>
+          </div>
+        </div>
+        <div class="cal-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend">
+          <div class="leg-item"><div class="leg-dot gold"></div> Selected</div>
+          <div class="leg-item"><div class="leg-dot range"></div> In range</div>
+          <div class="leg-item"><div class="leg-dot booked"></div> Unavailable</div>
+        </div>
+      </div>
+      <div class="booking-summary reveal reveal-delay-2">
+        <div class="summary-head">Your Escape</div>
+        <div class="s-row"><span>Check-in</span><span class="s-val" id="sumCI">Select date</span></div>
+        <div class="s-row"><span>Check-out</span><span class="s-val" id="sumCO">Select date</span></div>
+        <div class="s-row"><span>Duration</span><span class="s-val" id="sumNights">—</span></div>
+        <div class="s-row">
+          <span>Guests</span>
+          <div class="guest-ctrl">
+            <button class="guest-btn" onclick="changeGuests(-2)">−</button>
+            <span id="guestCount" style="min-width:20px;text-align:center;font-weight:600;">2</span>
+            <button class="guest-btn" onclick="changeGuests(2)">+</button>
+          </div>
+        </div>
+        <div class="s-row"><span>Rate</span><span class="s-val" id="sumRate">—</span></div>
+        <div class="price-total">
+          <div>
+            <div class="price-total-label">Total</div>
+            <div class="price-total-num" id="sumTotal">£0</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);text-align:right;max-width:140px;">Weekend premium applied automatically</div>
+        </div>
+        <button class="book-btn" id="bookBtn" onclick="requestBooking()" disabled>Secure Your Stay →</button>
+        <div class="book-note">💬 Confirms via WhatsApp within 2 hours</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing" style="background:var(--surface);">
+  <div class="section-inner">
+    <div class="section-tag reveal">Transparent Pricing</div>
+    <h2 class="section-title reveal">Simple, <em>Honest</em> Rates</h2>
+    <p class="section-sub reveal">Dynamic pricing that rewards longer stays. No hidden fees, no platform markup.</p>
+    <div class="pricing-grid">
+      <div class="price-card reveal reveal-delay-1">
+        <div class="pc-label">Midweek</div>
+        <div class="pc-price">£245</div>
+        <div class="pc-per">per night · Mon–Thu</div>
+        <ul class="pc-features">
+          <li>Full widebeam access</li>
+          <li>Mystery mooring</li>
+          <li>Free private parking</li>
+          <li>Dog welcome</li>
+        </ul>
+        <a href="#booking" class="btn btn-outline" style="width:100%;justify-content:center;">Book Midweek</a>
+      </div>
+      <div class="price-card featured reveal reveal-delay-2">
+        <div class="featured-badge">Most Popular</div>
+        <div class="pc-label">Weekend</div>
+        <div class="pc-price">£325</div>
+        <div class="pc-per">per night · Fri–Sun</div>
+        <ul class="pc-features">
+          <li>Full widebeam access</li>
+          <li>Mystery mooring</li>
+          <li>Free private parking</li>
+          <li>Dog welcome</li>
+          <li>Priority mooring choice</li>
+        </ul>
+        <a href="#booking" class="btn btn-gold" style="width:100%;justify-content:center;">Book Weekend</a>
+      </div>
+      <div class="price-card reveal reveal-delay-3">
+        <div class="pc-label">Weekly</div>
+        <div class="pc-price">£1,450</div>
+        <div class="pc-per">per week · Best value</div>
+        <ul class="pc-features">
+          <li>Full widebeam access</li>
+          <li>Mystery mooring</li>
+          <li>Free private parking</li>
+          <li>Dog welcome</li>
+          <li>Flexible check-in</li>
+          <li>Late checkout available</li>
+        </ul>
+        <a href="#booking" class="btn btn-outline" style="width:100%;justify-content:center;">Book Full Week</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOORINGS -->
+<section class="section" id="moorings">
+  <div class="section-inner">
+    <div class="section-tag reveal">Six Locations</div>
+    <h2 class="section-title reveal">Hand-Picked <em>Moorings</em></h2>
+    <p class="section-sub reveal">Each mooring is chosen for its character, scenery, and nearby amenities. Your exact location is revealed 48 hours before arrival.</p>
+    <div class="moorings-grid">
+      <div class="mooring-card reveal reveal-delay-1">
+        <div class="mooring-num">01</div>
+        <div class="mooring-name">Shardlow Basin</div>
+        <div class="mooring-desc">Historic Georgian marina village, award-winning waterfront pubs, golden hour views across the water. Our most requested mooring.</div>
+        <div class="mooring-tags"><span class="mooring-tag">🍺 Pubs</span><span class="mooring-tag">🌅 Sunsets</span><span class="mooring-tag">🏛 Historic</span></div>
+      </div>
+      <div class="mooring-card reveal reveal-delay-2">
+        <div class="mooring-num">02</div>
+        <div class="mooring-name">Sawley Cut</div>
+        <div class="mooring-desc">Peaceful rural setting on the River Trent junction. Long towpath walks, quiet countryside, and the famous Sawley Marina nearby.</div>
+        <div class="mooring-tags"><span class="mooring-tag">🚶 Walking</span><span class="mooring-tag">🌿 Rural</span><span class="mooring-tag">🎣 Fishing</span></div>
+      </div>
+      <div class="mooring-card reveal reveal-delay-3">
+        <div class="mooring-num">03</div>
+        <div class="mooring-name">Derwent Mouth</div>
+        <div class="mooring-desc">Where the Derwent meets the Trent — lockside serenity, watching boats work through the old lock. Truly magical at dawn.</div>
+        <div class="mooring-tags"><span class="mooring-tag">⚓ Lockside</span><span class="mooring-tag">🌄 Dawn Views</span><span class="mooring-tag">🦆 Wildlife</span></div>
+      </div>
+      <div class="mooring-card reveal reveal-delay-1">
+        <div class="mooring-num">04</div>
+        <div class="mooring-name">Weston-on-Trent</div>
+        <div class="mooring-desc">Tucked away in a charming Derbyshire village with excellent pubs, excellent walking routes, and a deep sense of calm.</div>
+        <div class="mooring-tags"><span class="mooring-tag">🏡 Village</span><span class="mooring-tag">🍺 Pubs</span><span class="mooring-tag">🌾 Countryside</span></div>
+      </div>
+      <div class="mooring-card reveal reveal-delay-2">
+        <div class="mooring-num">05</div>
+        <div class="mooring-name">Willington Reach</div>
+        <div class="mooring-desc">Family favourite with riverside walks to the village, shops nearby, and an easy-going stretch of water that feels like your own.</div>
+        <div class="mooring-tags"><span class="mooring-tag">👨‍👩‍👧 Family</span><span class="mooring-tag">🛍 Shops</span><span class="mooring-tag">🐕 Dog Walks</span></div>
+      </div>
+      <div class="mooring-card reveal reveal-delay-3">
+        <div class="mooring-num">06</div>
+        <div class="mooring-name">Mercia Marina</div>
+        <div class="mooring-desc">Our most luxurious setting — a boutique marina lifestyle with café, restaurant, chandlery, and stunning water views in every direction.</div>
+        <div class="mooring-tags"><span class="mooring-tag">☕ Café</span><span class="mooring-tag">🍽 Restaurant</span><span class="mooring-tag">✨ Premium</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" id="gallery" style="background:var(--surface);">
+  <div class="section-inner">
+    <div class="section-tag reveal">Visual Escape</div>
+    <h2 class="section-title reveal">Life on the <em>Water</em></h2>
+    <p class="section-sub reveal">Real photos from real stays. Swipe through the experience.</p>
+    <div class="gallery-grid">
+      <div class="g-img reveal" onclick="openLightbox(0)">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80" alt="Narrowboat on an English canal" loading="lazy">
+        <div class="g-img-overlay"><span>⊕</span></div>
+      </div>
+      <div class="g-img reveal reveal-delay-1" onclick="openLightbox(1)">
+        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=700&q=80" alt="English canal towpath at golden hour" loading="lazy">
+        <div class="g-img-overlay"><span>⊕</span></div>
+      </div>
+      <div class="g-img reveal reveal-delay-2" onclick="openLightbox(2)">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=700&q=80" alt="Sunset over the waterway" loading="lazy">
+        <div class="g-img-overlay"><span>⊕</span></div>
+      </div>
+      <div class="g-img reveal reveal-delay-1" onclick="openLightbox(3)">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=80" alt="Canal at sunrise" loading="lazy">
+        <div class="g-img-overlay"><span>⊕</span></div>
+      </div>
+      <div class="g-img reveal reveal-delay-2" onclick="openLightbox(4)">
+        <img src="https://images.unsplash.com/photo-1578632351561-6d5f52e1f3aa?auto=format&fit=crop&w=700&q=80" alt="Shardlow waterfront" loading="lazy">
+        <div class="g-img-overlay"><span>⊕</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MYSTERY MOORING -->
+<section class="section">
+  <div class="mystery reveal">
+    <div class="mystery-icon">🗺</div>
+    <div class="section-tag" style="justify-content:center;">Our Signature Experience</div>
+    <h2 class="mystery-title">The <em>Mystery</em> Mooring</h2>
+    <p style="color:var(--muted);max-width:560px;margin:0 auto 0;font-size:1rem;">Every booking comes with our signature mystery mooring experience. Your exact waterside location is revealed just 48 hours before you arrive.</p>
+    <div class="mystery-steps">
+      <div class="mstep">
+        <div class="mstep-num">01</div>
+        <div class="mstep-title">Book Your Dates</div>
+        <div class="mstep-desc">Choose your nights, confirm your booking, and let us handle the rest. No need to pick a mooring.</div>
+      </div>
+      <div class="mstep">
+        <div class="mstep-num">02</div>
+        <div class="mstep-title">We Select Your Mooring</div>
+        <div class="mstep-desc">We curate the perfect spot based on season, weather, and availability from our six premium locations.</div>
+      </div>
+      <div class="mstep">
+        <div class="mstep-num">03</div>
+        <div class="mstep-title">48-Hour Reveal</div>
+        <div class="mstep-desc">A message arrives with your full location details, arrival instructions, and local recommendations — the anticipation is part of the magic.</div>
+      </div>
+    </div>
+    <a href="#booking" class="btn btn-gold">Book a Mystery Stay</a>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews" style="background:var(--surface);">
+  <div class="section-inner">
+    <div class="section-tag reveal">Guest Stories</div>
+    <h2 class="section-title reveal">What Guests <em>Say</em></h2>
+    <div class="reviews-grid">
+      <div class="review-card reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">Genuinely better than any boutique hotel we've stayed at. The boat is immaculate, the mystery mooring concept is brilliant, and booking directly was so easy.</div>
+        <div class="review-author">
+          <div class="review-avatar">S</div>
+          <div><div class="review-name">Sarah M.</div><div class="review-location">Derby · May 2026</div></div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">We had no idea we'd end up at Mercia Marina — it was absolutely stunning. Woke up to mist over the water with our morning coffee. Unforgettable.</div>
+        <div class="review-author">
+          <div class="review-avatar">J</div>
+          <div><div class="review-name">James &amp; Kate</div><div class="review-location">Nottingham · April 2026</div></div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-3">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">Took our dog and he loved every second — walks by the canal, sitting on deck in the evening sun. The interiors are stunning. We're already rebooked.</div>
+        <div class="review-author">
+          <div class="review-avatar">E</div>
+          <div><div class="review-name">Emily R.</div><div class="review-location">Sheffield · March 2026</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="section" id="amenities">
+  <div class="section-inner">
+    <div class="section-tag reveal">On Board</div>
+    <h2 class="section-title reveal">Everything <em>Included</em></h2>
+    <div class="amenities-grid">
+      <div class="amenity reveal reveal-delay-1"><div class="amenity-icon">🛏</div><div class="amenity-label">King Bedroom</div><div class="amenity-desc">Luxury bedding &amp; blackout curtains</div></div>
+      <div class="amenity reveal reveal-delay-2"><div class="amenity-icon">🛁</div><div class="amenity-label">Full Bathroom</div><div class="amenity-desc">Hot shower, luxury toiletries</div></div>
+      <div class="amenity reveal reveal-delay-3"><div class="amenity-icon">🍳</div><div class="amenity-label">Full Kitchen</div><div class="amenity-desc">Hob, oven, fridge &amp; essentials</div></div>
+      <div class="amenity reveal reveal-delay-4"><div class="amenity-icon">📡</div><div class="amenity-label">WiFi &amp; TV</div><div class="amenity-desc">Fast 4G hotspot, Smart TV</div></div>
+      <div class="amenity reveal reveal-delay-1"><div class="amenity-icon">🐕</div><div class="amenity-label">Dog Friendly</div><div class="amenity-desc">All sizes welcome on board</div></div>
+      <div class="amenity reveal reveal-delay-2"><div class="amenity-icon">🅿</div><div class="amenity-label">Free Parking</div><div class="amenity-desc">Private space, full instructions</div></div>
+      <div class="amenity reveal reveal-delay-3"><div class="amenity-icon">🕯</div><div class="amenity-label">Mood Lighting</div><div class="amenity-desc">Dimmable, warm-tone throughout</div></div>
+      <div class="amenity reveal reveal-delay-4"><div class="amenity-icon">☕</div><div class="amenity-label">Welcome Pack</div><div class="amenity-desc">Local treats &amp; premium coffee</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background:var(--surface);">
+  <div class="section-inner">
+    <div class="section-tag reveal">Common Questions</div>
+    <h2 class="section-title reveal">Got <em>Questions?</em></h2>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>When is my mooring location revealed?</span><span class="faq-arrow">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">We send full location details, GPS coordinates, parking instructions, and local recommendations exactly 48 hours before your check-in time. The anticipation is part of the experience — but rest assured, every mooring is carefully chosen.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Can I request a specific mooring?</span><span class="faq-arrow">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">We work hard to surprise and delight, but if you have a specific mooring in mind (or wish to avoid one) just let us know via WhatsApp after booking and we'll do our best to accommodate.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Is the boat suitable for dogs?</span><span class="faq-arrow">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely — dogs of all sizes are very welcome. All of our moorings have great nearby walks, and we keep the boat clean for your furry travel companions. No extra charge.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>What are the check-in and check-out times?</span><span class="faq-arrow">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Standard check-in is from 3:00 PM and check-out by 10:00 AM. We're often flexible on these — just ask when booking and we'll see what we can do. Late checkout is sometimes available for a small fee.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Do I need boating experience?</span><span class="faq-arrow">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">None whatsoever — the boat stays moored throughout your stay. You enjoy all the atmosphere of canal life without any need to steer or operate the boat. Just arrive, relax, and enjoy.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>How do I pay?</span><span class="faq-arrow">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">After confirming via WhatsApp we'll send a secure payment link. We accept all major cards. A 25% deposit secures the booking with the remainder due 14 days before arrival.</div></div>
+      </div>
+    </div>
+
+    <!-- WAITLIST -->
+    <div class="waitlist-bar reveal">
+      <div class="waitlist-text">
+        <h3>Dates Fully Booked?</h3>
+        <p>Join the VIP waitlist — you'll be first to know of cancellations.</p>
+      </div>
+      <div class="waitlist-form">
+        <input type="email" id="waitlistEmail" placeholder="your@email.com">
+        <button class="btn btn-gold" onclick="joinWaitlist()" style="padding:14px 28px;">Join Waitlist</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">Rest &amp; <span>Roam</span></div>
+        <p>Luxury widebeam canal boat stays on England's finest waterways. Direct booking, no platforms, no fees.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#booking">Book a Stay</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#moorings">Moorings</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#reviews">Reviews</a>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Details</h4>
+        <p>📅 Check-in 3:00 PM</p>
+        <p>📤 Check-out 10:00 AM</p>
+        <p>🐕 Dog friendly</p>
+        <p>🅿 Free parking</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:hello@restandroam.co.uk">hello@restandroam.co.uk</a>
+        <a href="https://wa.me/447123456789">WhatsApp Us</a>
+        <p>Shardlow, Derbyshire</p>
+        <p>DE72 2GA</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Rest & Roam. All rights reserved.</div>
+      <div class="footer-socials">
+        <a href="#" class="social-icon" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-icon" title="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/447123456789?text=Hi!%20I'm%20interested%20in%20booking%20Rest%20%26%20Roam" class="float-wa" target="_blank" rel="noopener" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightboxOnBg(event)">
+  <div id="lb-close" onclick="closeLightbox()">✕</div>
+  <div id="lb-prev" onclick="lbNav(-1)">‹</div>
+  <img id="lb-img" src="" alt="">
+  <div id="lb-next" onclick="lbNav(1)">›</div>
+</div>
+
+<script>
+/* ── INIT ── */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('out'), 1600);
+  setTimeout(() => document.getElementById('heroBg').classList.add('pan'), 100);
+});
+
+/* ── NAV ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('solid', window.scrollY > 60);
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+  revealCheck();
+});
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+}
+
+/* ── REVEAL ON SCROLL ── */
+function revealCheck() {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.88) {
+      el.classList.add('visible');
+    }
+  });
+}
+revealCheck();
+
+/* ── CALENDAR ── */
+const today = new Date();
+today.setHours(0,0,0,0);
+let calYear = today.getFullYear();
+let calMonth = today.getMonth();
+let checkIn = null, checkOut = null;
+let guestCount = 2;
+
+const bookedDates = new Set([
+  '2026-05-16','2026-05-17',
+  '2026-05-23','2026-05-24','2026-05-25',
+  '2026-05-30','2026-05-31',
+  '2026-06-06','2026-06-07',
+  '2026-06-13','2026-06-14',
+  '2026-06-20','2026-06-21',
+  '2026-06-27','2026-06-28',
+  '2026-07-11','2026-07-12',
+  '2026-07-18','2026-07-19',
+]);
+
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function toYMD(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fromYMD(s) {
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function isWeekend(d) { const day = d.getDay(); return day === 0 || day === 6; }
+function nightRate(d) { return isWeekend(d) ? 325 : 245; }
+
+function renderCalendar() {
+  document.getElementById('calMonth').textContent = `${monthNames[calMonth]} ${calYear}`;
+  const first = new Date(calYear, calMonth, 1).getDay();
+  const days = new Date(calYear, calMonth+1, 0).getDate();
+  let html = '';
+  for (let i = 0; i < first; i++) html += '<div class="cal-day empty"></div>';
+  for (let d = 1; d <= days; d++) {
+    const dt = new Date(calYear, calMonth, d);
+    const ymd = toYMD(dt);
+    const isPast = dt < today;
+    const isBooked = bookedDates.has(ymd);
+    let cls = 'cal-day';
+    if (isPast) cls += ' past';
+    else if (isBooked) cls += ' booked';
+    else {
+      cls += ' available';
+      if (ymd === toYMD(today)) cls += ' today';
+      if (checkIn && ymd === checkIn) cls += ' check-in';
+      if (checkOut && ymd === checkOut) cls += ' check-out';
+      if (checkIn && !checkOut && ymd > checkIn) cls += ' available';
+      if (checkIn && checkOut && ymd > checkIn && ymd < checkOut) cls += ' in-range';
+    }
+    const clickable = !isPast && !isBooked;
+    html += `<div class="${cls}" ${clickable ? `onclick="pickDate('${ymd}')"` : ''}>${d}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+}
+
+function pickDate(ymd) {
+  if (!checkIn || (checkIn && checkOut) || fromYMD(ymd) <= fromYMD(checkIn)) {
+    checkIn = ymd; checkOut = null;
+  } else {
+    // Check no booked dates in range
+    let d = new Date(fromYMD(checkIn)); d.setDate(d.getDate()+1);
+    const end = fromYMD(ymd);
+    let blocked = false;
+    while (d < end) { if (bookedDates.has(toYMD(d))) { blocked = true; break; } d.setDate(d.getDate()+1); }
+    if (blocked) { checkIn = ymd; checkOut = null; }
+    else checkOut = ymd;
+  }
+  renderCalendar();
+  updateSummary();
+}
+
+function prevMonth() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+function nextMonth() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); }
+
+function updateSummary() {
+  const fmt = s => s ? new Date(s).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}) : 'Select date';
+  document.getElementById('sumCI').textContent = fmt(checkIn);
+  document.getElementById('sumCO').textContent = fmt(checkOut);
+  if (checkIn && checkOut) {
+    let nights = 0, total = 0, wknd = 0;
+    let d = new Date(fromYMD(checkIn));
+    const end = fromYMD(checkOut);
+    while (d < end) {
+      const rate = nightRate(d);
+      total += rate;
+      if (isWeekend(d)) wknd++;
+      nights++; d.setDate(d.getDate()+1);
+    }
+    document.getElementById('sumNights').textContent = `${nights} night${nights>1?'s':''}`;
+    const wkdNights = nights - wknd;
+    let rateStr = '';
+    if (wkdNights > 0 && wknd > 0) rateStr = `£245 × ${wkdNights} + £325 × ${wknd}`;
+    else if (wknd > 0) rateStr = `£325 × ${wknd} (weekend)`;
+    else rateStr = `£245 × ${wkdNights} (midweek)`;
+    document.getElementById('sumRate').textContent = rateStr;
+    document.getElementById('sumTotal').textContent = `£${total.toLocaleString()}`;
+    document.getElementById('bookBtn').disabled = false;
+  } else {
+    document.getElementById('sumNights').textContent = '—';
+    document.getElementById('sumRate').textContent = '—';
+    document.getElementById('sumTotal').textContent = '£0';
+    document.getElementById('bookBtn').disabled = true;
+  }
+}
+
+function changeGuests(delta) {
+  guestCount = Math.min(6, Math.max(1, guestCount + delta));
+  document.getElementById('guestCount').textContent = guestCount;
+}
+
+function requestBooking() {
+  if (!checkIn || !checkOut) return;
+  const d1 = new Date(checkIn).toLocaleDateString('en-GB');
+  const d2 = new Date(checkOut).toLocaleDateString('en-GB');
+  const total = document.getElementById('sumTotal').textContent;
+  const msg = `Hi! I'd like to book Rest & Roam.\n\n📅 ${d1} → ${d2}\n👥 ${guestCount} guests\n💰 Total: ${total}\n\nPlease confirm availability!`;
+  window.open(`https://wa.me/447123456789?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+renderCalendar();
+
+/* ── FAQ ── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const answer = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+/* ── LIGHTBOX ── */
+const galleryImages = [
+  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1400&q=85',
+  'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1400&q=85',
+  'https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1400&q=85',
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1400&q=85',
+  'https://images.unsplash.com/photo-1578632351561-6d5f52e1f3aa?auto=format&fit=crop&w=1400&q=85',
+];
+let lbIdx = 0;
+function openLightbox(idx) { lbIdx = idx; document.getElementById('lb-img').src = galleryImages[idx]; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+function closeLightboxOnBg(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+function lbNav(dir) { lbIdx = (lbIdx + dir + galleryImages.length) % galleryImages.length; document.getElementById('lb-img').src = galleryImages[lbIdx]; }
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeLightbox(); if (e.key==='ArrowLeft') lbNav(-1); if (e.key==='ArrowRight') lbNav(1); });
+
+/* ── WAITLIST ── */
+function joinWaitlist() {
+  const email = document.getElementById('waitlistEmail').value.trim();
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  alert(`✅ You're on the list! We'll notify ${email} of any openings.`);
+  document.getElementById('waitlistEmail').value = '';
+}
+</script>
+</body>
+</html>
