@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rest & Roam | Luxury Widebeam Canal Stays</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#0a1a10;
+--surface:#111f17;
+--surface-2:#182d1f;
+--surface-3:#1f3828;
+--gold:#c9a96e;
+--gold-light:#e8d7b3;
+--gold-border:rgba(201,169,110,.2);
+--gold-dim:rgba(201,169,110,.1);
+--text:#f5f0e6;
+--muted:rgba(245,240,230,.65);
+--radius:20px;
+--radius-lg:30px;
+--shadow:0 30px 70px rgba(0,0,0,.35);
+--ease:cubic-bezier(.25,.46,.45,.94);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+line-height:1.7;
+}
+
+img{
+display:block;
+width:100%;
+height:auto;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+inset:0;
+background:var(--bg);
+z-index:9999;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:opacity .8s var(--ease), visibility .8s;
+}
+
+#loader.out{
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+}
+
+.loader-inner{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.loader-arch{
+color:var(--gold-light);
+margin-bottom:26px;
+}
+
+.loader-arch svg{
+width:140px;
+height:165px;
+}
+
+.loader-brand{
+display:flex;
+flex-direction:column;
+align-items:center;

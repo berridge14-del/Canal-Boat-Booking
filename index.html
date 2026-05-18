@@ -1,0 +1,4240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rest & Roam | Luxury Widebeam Canal Stays</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#0a1a10;
+--surface:#111f17;
+--surface-2:#182d1f;
+--surface-3:#1f3828;
+--gold:#c9a96e;
+--gold-light:#e8d7b3;
+--gold-border:rgba(201,169,110,.2);
+--gold-dim:rgba(201,169,110,.1);
+--text:#f5f0e6;
+--muted:rgba(245,240,230,.65);
+--radius:20px;
+--radius-lg:30px;
+--shadow:0 30px 70px rgba(0,0,0,.35);
+--ease:cubic-bezier(.25,.46,.45,.94);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+line-height:1.7;
+}
+
+img{
+display:block;
+width:100%;
+height:auto;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+inset:0;
+background:radial-gradient(circle at 50% 40%,rgba(201,169,110,.12),transparent 22rem),var(--bg);
+z-index:9999;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:opacity 1.2s var(--ease) .3s, visibility 1.2s .3s;
+}
+
+#loader.out{
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+}
+
+.loader-inner{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.loader-arch{
+color:var(--gold-light);
+margin-bottom:26px;
+}
+
+.loader-arch svg{
+width:140px;
+height:165px;
+}
+
+.loader-brand{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+opacity:0;
+animation:fadeUp 1s var(--ease) .4s forwards;
+}
+
+.loader-brand .lbr,
+.loader-brand .lbm{
+font-family:'Montserrat',sans-serif;
+font-size:4rem;
+font-weight:900;
+letter-spacing:.16em;
+text-transform:uppercase;
+color:var(--gold-light);
+line-height:1;
+}
+
+.loader-brand .lba{
+font-size:.9rem;
+letter-spacing:.5em;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+.loader-track{
+width:260px;
+height:2px;
+background:rgba(255,255,255,.08);
+margin-top:32px;
+overflow:hidden;
+}
+
+.loader-fill{
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--gold),var(--gold-light));
+animation:fillBar 1.8s var(--ease) .6s forwards;
+}
+
+@keyframes fillBar{
+to{
+width:100%;
+}
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:none;
+}
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:500;
+padding:0 4%;
+transition:background .4s var(--ease);
+backdrop-filter:blur(18px);
+}
+
+nav.solid{
+background:rgba(10,26,16,.9);
+border-bottom:1px solid var(--gold-border);
+}
+
+.nav-inner{
+max-width:1440px;
+margin:auto;
+height:120px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.logo{
+display:inline-flex;
+align-items:center;
+gap:22px;
+transform-origin:left center;
+transition:transform .35s var(--ease);
+}
+
+nav.solid .logo{
+transform:scale(.72);
+}
+
+.logo-mark{
+width:48px;
+height:56px;
+color:var(--gold-light);
+flex-shrink:0;
+}
+
+.logo-text{
+display:flex;
+flex-direction:column;
+line-height:.92;
+}
+
+.logo-text-rest,
+.logo-text-roam{
+font-family:'Montserrat',sans-serif;
+font-size:1.6rem;
+font-weight:900;
+letter-spacing:.18em;
+text-transform:uppercase;
+color:var(--gold-light);
+}
+
+.logo-text-and{
+font-size:.65rem;
+letter-spacing:.45em;
+text-transform:uppercase;
+text-align:center;
+margin:3px 0;
+color:var(--gold);
+}
+
+.nav-links{
+display:flex;
+gap:2rem;
+list-style:none;
+align-items:center;
+}
+
+.nav-links a{
+font-size:.82rem;
+text-transform:uppercase;
+letter-spacing:.16em;
+color:var(--muted);
+position:relative;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:var(--gold-light);
+}
+
+.nav-links a::after{
+content:'';
+position:absolute;
+left:0;
+bottom:-6px;
+width:0;
+height:1px;
+background:var(--gold);
+transition:.3s;
+}
+
+.nav-links a:hover::after{
+width:100%;
+}
+
+.nav-btn{
+padding:12px 22px;
+border:1px solid var(--gold-border);
+border-radius:999px;
+}
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:flex-end;
+position:relative;
+overflow:hidden;
+}
+
+.hero-bg{
+position:absolute;
+inset:0;
+background:url('Images/hero.jpg') center/cover no-repeat;
+transform:scale(1.05);
+transition:transform 8s var(--ease);
+}
+
+.hero-bg.pan{
+transform:scale(1);
+}
+
+.hero-overlay{
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+160deg,
+rgba(10,26,16,.12) 0%,
+rgba(10,26,16,.45) 50%,
+rgba(10,26,16,.95) 100%
+);
+}
+
+.hero-body{
+position:relative;
+z-index:5;
+width:100%;
+max-width:1320px;
+margin:auto;
+padding:0 6% 100px;
+}
+
+.hero-eyebrow{
+display:inline-flex;
+align-items:center;
+gap:10px;
+font-size:.75rem;
+letter-spacing:.3em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:20px;
+}
+
+.hero-eyebrow::before{
+content:'';
+width:32px;
+height:1px;
+background:var(--gold);
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(3.8rem,8.5vw,8.2rem);
+line-height:.98;
+max-width:1120px;
+margin-bottom:30px;
+}
+
+.hero h1 em{
+font-style:italic;
+color:var(--gold-light);
+}
+
+.hero-sub{
+max-width:760px;
+font-size:1.35rem;
+color:var(--muted);
+margin-bottom:48px;
+}
+
+.hero-ctas{
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+}
+
+/* BUTTONS */
+
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:18px 34px;
+border-radius:999px;
+font-size:.92rem;
+font-weight:600;
+letter-spacing:.04em;
+transition:.35s;
+border:none;
+cursor:pointer;
+}
+
+.btn-gold{
+background:linear-gradient(135deg,var(--gold),#d4b47a);
+color:#111;
+box-shadow:0 20px 50px rgba(201,169,110,.2);
+}
+
+.btn-gold:hover{
+transform:translateY(-3px);
+}
+
+.btn-outline{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.15);
+color:var(--text);
+}
+
+.btn-outline:hover{
+background:rgba(255,255,255,.08);
+}
+
+/* SECTION */
+
+.section{
+padding:110px 6%;
+}
+
+.section-inner{
+max-width:1320px;
+margin:auto;
+}
+
+.section-tag{
+font-size:.76rem;
+letter-spacing:.3em;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:14px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.section-tag::before{
+content:'';
+width:24px;
+height:1px;
+background:var(--gold);
+}
+
+.section-title{
+font-family:'Playfair Display',serif;
+font-size:clamp(2rem,4vw,3.8rem);
+line-height:1.1;
+margin-bottom:18px;
+}
+
+.section-title em{
+font-style:italic;
+color:var(--gold-light);
+}
+
+.section-sub{
+max-width:620px;
+font-size:1.05rem;
+color:var(--muted);
+}
+
+/* MOORINGS */
+
+#moorings{
+background:var(--surface);
+}
+
+.route-map-wrap{
+margin-top:42px;
+background:linear-gradient(180deg,rgba(201,169,110,.06),rgba(201,169,110,.02));
+border:1px solid var(--gold-border);
+border-radius:24px;
+padding:24px;
+position:relative;
+overflow:hidden;
+}
+
+.route-map{
+position:relative;
+min-height:520px;
+border-radius:18px;
+overflow:hidden;
+background:
+linear-gradient(130deg,rgba(10,26,16,.42),rgba(10,26,16,.72)),
+image-set(url('Images/Map.png') 1x) center/contain no-repeat;
+background-color:#0d1b13;
+}
+
+.route-map::before{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at 20% 20%,rgba(201,169,110,.2),transparent 40%);
+pointer-events:none;
+}
+
+.route-line{
+position:absolute;
+left:8%;
+right:8%;
+top:52%;
+height:3px;
+background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));
+opacity:.9;
+box-shadow:0 0 18px rgba(201,169,110,.45);
+animation:pulseLine 3s ease-in-out infinite;
+}
+
+@keyframes pulseLine{
+0%,100%{opacity:.65;transform:scaleX(.98);}
+50%{opacity:1;transform:scaleX(1);}
+}
+
+.route-stops{
+position:absolute;
+inset:0;
+}
+
+.stop-dot{
+position:absolute;
+transform:translate(-50%,-50%);
+width:16px;
+height:16px;
+border-radius:999px;
+background:var(--gold-light);
+box-shadow:0 0 0 0 rgba(232,215,179,.65);
+animation:ping 2s infinite;
+cursor:pointer;
+z-index:3;
+}
+
+@keyframes ping{
+0%{box-shadow:0 0 0 0 rgba(232,215,179,.5);}
+70%{box-shadow:0 0 0 16px rgba(232,215,179,0);}
+100%{box-shadow:0 0 0 0 rgba(232,215,179,0);}
+}
+
+.stop-label{
+position:absolute;
+transform:translate(-50%,-50%);
+padding:8px 12px;
+border-radius:999px;
+font-size:.76rem;
+letter-spacing:.12em;
+text-transform:uppercase;
+background:rgba(10,26,16,.86);
+border:1px solid var(--gold-border);
+color:var(--gold-light);
+backdrop-filter:blur(4px);
+white-space:nowrap;
+z-index:3;
+}
+
+.stop-pop{
+position:absolute;
+transform:translate(-50%,-50%) scale(.92);
+width:330px;
+max-width:90vw;
+background:rgba(17,31,23,.98);
+border:1px solid var(--gold-border);
+border-radius:16px;
+padding:18px 18px 16px;
+opacity:0;
+pointer-events:none;
+transition:.25s var(--ease);
+z-index:4;
+box-shadow:0 20px 35px rgba(0,0,0,.45);
+}
+
+.stop-pop h4{
+font-family:'Playfair Display',serif;
+font-size:1.1rem;
+margin-bottom:8px;
+color:var(--gold-light);
+}
+
+.stop-pop ul{
+padding-left:18px;
+color:var(--muted);
+font-size:.92rem;
+line-height:1.65;
+display:grid;
+gap:4px;
+}
+
+.stop-pop .park{
+margin-top:12px;
+font-size:.86rem;
+line-height:1.55;
+color:var(--gold-light);
+opacity:.95;
+border-top:1px dashed var(--gold-border);
+padding-top:10px;
+}
+
+.stop-dot:hover + .stop-label + .stop-pop,
+.stop-label:hover + .stop-pop,
+.stop-pop:hover{
+opacity:1;
+pointer-events:auto;
+transform:translate(-50%,-50%) scale(1);
+}
+
+.route-order{
+margin-top:18px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+align-items:center;
+color:var(--gold-light);
+font-size:.82rem;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.route-order span{
+padding:8px 12px;
+border:1px solid var(--gold-border);
+border-radius:999px;
+background:rgba(10,26,16,.55);
+}
+
+.moorings-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:30px;
+}
+
+.mooring-card{
+background:var(--bg);
+border:1px solid var(--gold-border);
+border-radius:var(--radius);
+padding:24px 22px;
+transition:.3s;
+position:relative;
+overflow:hidden;
+}
+
+.mooring-card::after{
+content:'Click to view local amenities';
+position:absolute;
+left:18px;
+right:18px;
+bottom:14px;
+font-size:.68rem;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:var(--gold);
+opacity:.72;
+}
+
+.mooring-card:hover{
+background:var(--surface-2);
+transform:translateY(-8px) scale(1.01);
+border-color:rgba(201,169,110,.45);
+box-shadow:0 20px 45px rgba(0,0,0,.35), 0 0 0 1px rgba(201,169,110,.25);
+}
+
+.mooring-num{
+font-family:'Playfair Display',serif;
+font-size:.9rem;
+color:var(--gold);
+margin-bottom:8px;
+}
+
+.mooring-name{
+font-family:'Playfair Display',serif;
+font-size:1.3rem;
+margin-bottom:8px;
+}
+
+.mooring-desc{
+font-size:.9rem;
+color:var(--muted);
+margin-bottom:14px;
+padding-bottom:20px;
+}
+
+.mooring-tags{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+}
+
+.mooring-tag{
+padding:4px 12px;
+font-size:.72rem;
+background:var(--gold-dim);
+border:1px solid var(--gold-border);
+border-radius:999px;
+color:var(--gold-light);
+}
+
+/* GALLERY */
+
+.gallery-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+grid-template-rows:280px 280px;
+gap:16px;
+margin-top:50px;
+}
+
+.gallery-grid .g-img:nth-child(1){
+grid-row:span 2;
+}
+
+.gallery-grid .g-img:nth-child(4){
+grid-column:span 2;
+}
+
+.g-img{
+position:relative;
+overflow:hidden;
+border-radius:var(--radius);
+}
+
+.g-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:transform .7s var(--ease);
+}
+
+.g-img:hover img{
+transform:scale(1.06);
+}
+
+/* SIDE PROFILE */
+
+.cinematic-panel{
+display:grid;
+grid-template-columns:1.15fr .85fr;
+min-height:760px;
+background:var(--surface);
+overflow:hidden;
+border-top:1px solid var(--gold-border);
+border-bottom:1px solid var(--gold-border);
+}
+
+.cinematic-image{
+position:relative;
+overflow:hidden;
+}
+
+.cinematic-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:saturate(.92);
+}
+
+.cinematic-image::after{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+90deg,
+rgba(10,26,16,.08),
+rgba(10,26,16,.48)
+);
+}
+
+.cinematic-content{
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:8vw;
+}
+
+.cinematic-content p{
+max-width:480px;
+color:var(--muted);
+line-height:1.9;
+margin:20px 0 34px;
+}
+
+/* MYSTERY */
+
+.mystery{
+background:var(--surface-2);
+border:1px solid var(--gold-border);
+border-radius:var(--radius-lg);
+padding:60px;
+text-align:center;
+}
+
+.mystery-icon{
+font-size:4rem;
+margin-bottom:16px;
+}
+
+.mystery-flagline{
+font-size:.76rem;
+letter-spacing:.24em;
+text-transform:uppercase;
+color:var(--gold);
+opacity:.75;
+margin-bottom:28px;
+}
+
+.mystery-title{
+font-family:'Playfair Display',serif;
+font-size:clamp(2rem,4vw,3rem);
+margin-bottom:18px;
+}
+
+.mystery-copy{
+max-width:620px;
+margin:auto;
+color:var(--muted);
+}
+
+.mystery-steps{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+margin:46px 0;
+}
+
+.mstep{
+background:var(--surface-3);
+border:1px solid var(--gold-border);
+border-radius:var(--radius);
+padding:24px;
+text-align:left;
+}
+
+.mstep-num{
+font-family:'Playfair Display',serif;
+font-size:2rem;
+color:var(--gold);
+margin-bottom:8px;
+}
+
+.mstep-title{
+font-weight:600;
+margin-bottom:8px;
+}
+
+.mstep-desc{
+font-size:.88rem;
+color:var(--muted);
+}
+
+/* AMENITIES */
+
+#amenities{
+background:var(--surface);
+}
+
+.amenities-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin-top:50px;
+}
+
+.amenity{
+background:var(--bg);
+border:1px solid var(--gold-border);
+border-radius:var(--radius);
+padding:26px 20px;
+text-align:center;
+transition:.3s;
+}
+
+.amenity:hover{
+background:var(--surface-2);
+transform:translateY(-4px);
+}
+
+.amenity-icon{
+font-size:2rem;
+color:var(--gold-light);
+margin-bottom:14px;
+}
+
+.amenity-label{
+font-weight:600;
+margin-bottom:4px;
+}
+
+.amenity-desc{
+font-size:.82rem;
+color:var(--muted);
+}
+
+/* BOOKING */
+
+.booking-box{
+background:var(--surface);
+border:1px solid var(--gold-border);
+border-radius:var(--radius-lg);
+padding:42px;
+max-width:640px;
+margin-top:50px;
+}
+
+.booking-box h3{
+font-family:'Playfair Display',serif;
+font-size:2rem;
+margin-bottom:16px;
+}
+
+.booking-box p{
+color:var(--muted);
+margin-bottom:28px;
+}
+
+.booking-actions{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+/* FOOTER */
+
+footer{
+padding:80px 6% 40px;
+border-top:1px solid var(--gold-border);
+}
+
+.footer-inner{
+max-width:1320px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.footer-copy{
+font-size:.82rem;
+color:rgba(255,255,255,.45);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.moorings-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.gallery-grid{
+grid-template-columns:1fr 1fr;
+grid-template-rows:auto;
+}
+
+.gallery-grid .g-img:nth-child(1){
+grid-row:span 1;
+}
+
+.gallery-grid .g-img:nth-child(4){
+grid-column:span 1;
+}
+
+.cinematic-panel{
+grid-template-columns:1fr;
+}
+
+.cinematic-image{
+height:420px;
+}
+
+.mystery-steps{
+grid-template-columns:1fr;
+}
+
+.amenities-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:640px){
+
+.nav-inner{
+height:92px;
+}
+
+.logo{
+transform:scale(.72);
+margin-left:-12px;
+}
+
+nav.solid .logo{
+transform:scale(.62);
+}
+
+.nav-links{
+display:none;
+}
+
+.section{
+padding:80px 5%;
+}
+
+.moorings-grid,
+.gallery-grid,
+.amenities-grid{
+grid-template-columns:1fr;
+}
+
+.route-map{
+min-height:520px;
+}
+
+.route-line{
+left:50%;
+right:auto;
+top:10%;
+bottom:10%;
+width:3px;
+height:auto;
+transform:translateX(-50%);
+background:linear-gradient(180deg,var(--gold),var(--gold-light),var(--gold));
+}
+
+.mystery{
+padding:40px 24px;
+}
+
+.hero-body{
+padding-bottom:80px;
+}
+
+.hero h1{
+font-size:clamp(2.6rem,12vw,4rem);
+line-height:1.02;
+}
+
+.hero-sub{
+font-size:1.02rem;
+max-width:100%;
+}
+
+}
+
+/* PREMIUM ELEVATION PASS */
+
+:root{
+--bg:#07150e;
+--surface:#0f2117;
+--surface-2:#142a1e;
+--surface-3:#1b3526;
+--gold:#c9a96e;
+--gold-light:#f1dfb7;
+--ivory:#f7f0df;
+--sage:#9fb7a0;
+--clay:#9c6f52;
+--glass:rgba(12,29,19,.62);
+--glass-soft:rgba(255,255,255,.07);
+--gold-border:rgba(241,223,183,.2);
+--gold-dim:rgba(201,169,110,.12);
+--muted:rgba(247,240,223,.7);
+--radius:8px;
+--radius-lg:8px;
+--shadow:0 34px 90px rgba(0,0,0,.42);
+}
+
+*,
+*::before,
+*::after{
+letter-spacing:0!important;
+}
+
+body{
+background:
+radial-gradient(circle at 18% 6%,rgba(201,169,110,.16),transparent 30rem),
+radial-gradient(circle at 86% 26%,rgba(91,128,101,.18),transparent 36rem),
+linear-gradient(180deg,#06120c 0%,#08170f 45%,#0d1d14 100%);
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+z-index:1;
+pointer-events:none;
+opacity:.1;
+mix-blend-mode:screen;
+background-image:
+radial-gradient(circle at 20% 30%,rgba(255,255,255,.8) 0 1px,transparent 1px),
+radial-gradient(circle at 75% 65%,rgba(255,255,255,.6) 0 1px,transparent 1px);
+background-size:7px 7px,11px 11px;
+}
+
+body::after{
+content:'';
+position:fixed;
+inset:-20vh -10vw;
+z-index:0;
+pointer-events:none;
+background:
+radial-gradient(circle at 15% 20%,rgba(201,169,110,.16),transparent 24rem),
+radial-gradient(circle at 72% 36%,rgba(159,183,160,.1),transparent 28rem),
+radial-gradient(circle at 50% 100%,rgba(156,111,82,.12),transparent 34rem);
+filter:blur(12px);
+}
+
+nav,
+section,
+footer,
+#loader{
+position:relative;
+z-index:2;
+}
+
+.ambient-mist{
+position:fixed;
+inset:0;
+z-index:1;
+pointer-events:none;
+overflow:hidden;
+}
+
+.ambient-mist span{
+position:absolute;
+display:block;
+width:42vw;
+height:42vw;
+min-width:320px;
+min-height:320px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(255,255,255,.08),transparent 64%);
+filter:blur(18px);
+opacity:.34;
+animation:mistDrift 28s linear infinite;
+}
+
+.ambient-mist span:nth-child(1){
+left:-12vw;
+top:18vh;
+}
+
+.ambient-mist span:nth-child(2){
+right:-16vw;
+top:48vh;
+animation-duration:34s;
+animation-delay:-10s;
+}
+
+.ambient-mist span:nth-child(3){
+left:24vw;
+bottom:-22vh;
+animation-duration:38s;
+animation-delay:-18s;
+}
+
+@keyframes mistDrift{
+0%{transform:translate3d(0,0,0) scale(1);}
+50%{transform:translate3d(8vw,-7vh,0) scale(1.14);}
+100%{transform:translate3d(0,0,0) scale(1);}
+}
+
+nav{
+background:linear-gradient(180deg,rgba(7,21,14,.72),rgba(7,21,14,0));
+}
+
+.nav-inner{
+height:108px;
+}
+
+.nav-links{
+gap:1.25rem;
+}
+
+.nav-links a{
+font-size:.8rem;
+}
+
+.nav-btn{
+background:rgba(255,255,255,.06);
+box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.hero{
+min-height:94svh;
+align-items:center;
+padding-top:120px;
+isolation:isolate;
+}
+
+.hero-bg{
+background:url('Images/hero.jpg') center/cover no-repeat;
+will-change:transform;
+--hero-shift:0px;
+transform:scale(1.08) translateY(var(--hero-shift));
+transition:transform 8s var(--ease);
+}
+
+.hero-bg.pan{
+transform:scale(1.02) translateY(var(--hero-shift));
+}
+
+.hero::before{
+content:'';
+position:absolute;
+inset:auto 0 0;
+height:34vh;
+z-index:2;
+background:linear-gradient(180deg,transparent,rgba(7,21,14,.92));
+pointer-events:none;
+}
+
+.hero::after{
+content:'';
+position:absolute;
+inset:0;
+z-index:1;
+pointer-events:none;
+background:
+radial-gradient(circle at 28% 56%,rgba(201,169,110,.2),transparent 23rem),
+linear-gradient(90deg,rgba(7,21,14,.72),rgba(7,21,14,.26) 44%,rgba(7,21,14,.8));
+}
+
+.hero-overlay{
+background:linear-gradient(180deg,rgba(7,21,14,.1),rgba(7,21,14,.34) 42%,rgba(7,21,14,.9));
+z-index:1;
+}
+
+.hero-body{
+padding-bottom:70px;
+z-index:5;
+}
+
+.hero-eyebrow,
+.section-tag{
+color:var(--gold-light);
+opacity:.9;
+font-weight:600;
+}
+
+.hero h1{
+font-size:clamp(4.6rem,9vw,9.8rem);
+max-width:820px;
+margin-bottom:20px;
+text-shadow:0 22px 70px rgba(0,0,0,.5);
+}
+
+.hero-kicker{
+font-family:'Playfair Display',serif;
+font-size:clamp(1.8rem,3vw,3.4rem);
+line-height:1.08;
+max-width:980px;
+margin-bottom:24px;
+color:var(--ivory);
+}
+
+.hero-sub{
+max-width:680px;
+font-size:1.08rem;
+margin-bottom:34px;
+}
+
+.hero-trust{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:26px;
+max-width:820px;
+}
+
+.hero-trust span,
+.booking-proof span,
+.trust-ribbon span{
+display:inline-flex;
+align-items:center;
+gap:8px;
+min-height:38px;
+padding:8px 12px;
+border:1px solid rgba(241,223,183,.22);
+background:rgba(7,21,14,.58);
+backdrop-filter:blur(16px);
+color:rgba(247,240,223,.82);
+border-radius:999px;
+font-size:.86rem;
+}
+
+.btn{
+position:relative;
+overflow:hidden;
+border-radius:999px;
+min-height:54px;
+box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.btn::after{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.24),transparent 72%);
+transform:translateX(-120%);
+transition:transform .7s var(--ease);
+}
+
+.btn:hover::after{
+transform:translateX(120%);
+}
+
+.btn-gold{
+background:linear-gradient(135deg,#e2c488,var(--gold),#b89257);
+color:#08140d;
+}
+
+.btn-outline{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(241,223,183,.22);
+backdrop-filter:blur(14px);
+}
+
+.editorial-break{
+position:relative;
+z-index:2;
+padding:90px 6%;
+background:
+linear-gradient(90deg,rgba(7,21,14,.96),rgba(12,31,21,.72),rgba(7,21,14,.96)),
+url('Images/navigation.jpg') center/cover fixed;
+border-block:1px solid rgba(241,223,183,.13);
+overflow:hidden;
+}
+
+.editorial-break::after{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at 70% 50%,rgba(201,169,110,.18),transparent 28rem);
+pointer-events:none;
+}
+
+.editorial-break blockquote{
+position:relative;
+max-width:980px;
+margin:auto;
+font-family:'Playfair Display',serif;
+font-size:clamp(2.15rem,5vw,5.2rem);
+line-height:1.05;
+color:var(--ivory);
+text-align:center;
+}
+
+.editorial-break cite{
+display:block;
+font-family:'Inter',sans-serif;
+font-size:.92rem;
+font-style:normal;
+color:var(--gold-light);
+margin-top:22px;
+}
+
+.section{
+padding:120px 6%;
+}
+
+.section-title{
+max-width:850px;
+}
+
+#moorings,
+#amenities{
+background:
+radial-gradient(circle at 20% 10%,rgba(201,169,110,.1),transparent 26rem),
+linear-gradient(180deg,rgba(13,29,20,.94),rgba(8,20,13,.98));
+}
+
+.route-map-wrap,
+.mystery,
+.booking-box{
+background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+backdrop-filter:blur(22px);
+box-shadow:var(--shadow);
+}
+
+.route-map-wrap{
+margin-bottom:70px;
+}
+
+.route-map{
+position:relative;
+min-height:500px;
+aspect-ratio:1024/457;
+background:url('Images/Map.png') center/contain no-repeat;
+background-color:#07140d;
+border-radius:8px;
+overflow:hidden;
+}
+
+.destination-journey{
+display:grid;
+gap:28px;
+margin-top:56px;
+}
+
+.destination-panel{
+display:grid;
+grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
+min-height:470px;
+overflow:hidden;
+border:1px solid rgba(241,223,183,.16);
+background:rgba(7,21,14,.62);
+box-shadow:0 26px 80px rgba(0,0,0,.36);
+}
+
+.destination-panel:nth-child(even){
+grid-template-columns:minmax(340px,.95fr) minmax(0,1.05fr);
+}
+
+.destination-panel:nth-child(even) .destination-media{
+order:2;
+}
+
+.destination-media{
+position:relative;
+overflow:hidden;
+min-height:420px;
+}
+
+.destination-media img,
+.parallax-media img{
+width:100%;
+height:100%;
+object-fit:cover;
+transform:scale(1.08) translateY(var(--shift,0));
+transition:transform .8s var(--ease),filter .8s var(--ease);
+will-change:transform;
+}
+
+.destination-panel:hover .destination-media img{
+filter:saturate(1.06) contrast(1.03);
+}
+
+.destination-media::before{
+content:'';
+position:absolute;
+inset:0;
+z-index:1;
+background:
+linear-gradient(180deg,rgba(7,21,14,.04),rgba(7,21,14,.66)),
+radial-gradient(circle at 58% 54%,rgba(201,169,110,.18),transparent 24rem);
+}
+
+.destination-content{
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:56px;
+}
+
+.destination-content::before{
+content:'';
+position:absolute;
+inset:28px;
+border:1px solid rgba(241,223,183,.12);
+pointer-events:none;
+}
+
+.destination-num{
+color:var(--gold-light);
+font-family:'Playfair Display',serif;
+font-size:1rem;
+margin-bottom:12px;
+}
+
+.destination-content h3{
+font-family:'Playfair Display',serif;
+font-size:clamp(2rem,3vw,3.4rem);
+line-height:1.08;
+margin-bottom:16px;
+}
+
+.destination-content p{
+color:var(--muted);
+max-width:520px;
+}
+
+.destination-pull{
+margin-top:24px;
+padding-left:18px;
+border-left:2px solid var(--gold);
+font-family:'Playfair Display',serif;
+font-size:1.2rem;
+color:var(--ivory);
+line-height:1.45;
+}
+
+.destination-meta{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:24px;
+}
+
+.destination-meta span{
+padding:7px 10px;
+border:1px solid rgba(241,223,183,.17);
+background:rgba(255,255,255,.045);
+color:var(--gold-light);
+border-radius:999px;
+font-size:.82rem;
+}
+
+.gallery-grid{
+grid-template-columns:1.08fr .92fr 1fr;
+grid-template-rows:250px 250px 360px;
+gap:12px;
+align-items:stretch;
+}
+
+.gallery-grid .g-img:nth-child(1){
+grid-row:1 / span 2;
+}
+
+.gallery-grid .g-img:nth-child(4){
+grid-column:2;
+grid-row:2;
+}
+
+.gallery-grid .g-img:nth-child(6){
+grid-column:1 / span 3;
+grid-row:3;
+}
+
+.g-img{
+border-radius:8px;
+background:#0c1c13;
+}
+
+.g-img::after{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,transparent 44%,rgba(7,21,14,.68));
+opacity:.7;
+pointer-events:none;
+}
+
+.g-img figcaption{
+position:absolute;
+left:18px;
+right:18px;
+bottom:16px;
+z-index:2;
+font-size:.92rem;
+color:var(--ivory);
+text-shadow:0 10px 24px rgba(0,0,0,.55);
+}
+
+.gallery-grid .g-img:nth-child(2) img{
+object-position:center 56%;
+}
+
+.gallery-grid .g-img:nth-child(5) img{
+object-position:center 58%;
+}
+
+.gallery-grid .g-img:nth-child(6) img{
+object-position:center 52%;
+}
+
+.cinematic-panel{
+background:
+radial-gradient(circle at 78% 42%,rgba(201,169,110,.13),transparent 26rem),
+linear-gradient(90deg,#0b1b12,#12271b);
+}
+
+.cinematic-image{
+min-height:620px;
+}
+
+.cinematic-image img{
+transform:scale(1.03);
+}
+
+.mystery{
+position:relative;
+overflow:hidden;
+}
+
+.mystery::before{
+content:'';
+position:absolute;
+inset:-30%;
+background:
+radial-gradient(circle at 50% 40%,rgba(201,169,110,.16),transparent 18rem),
+radial-gradient(circle at 80% 20%,rgba(159,183,160,.12),transparent 20rem);
+pointer-events:none;
+}
+
+.mystery > *{
+position:relative;
+}
+
+.mystery-icon{
+display:flex;
+justify-content:center;
+margin-bottom:22px;
+}
+
+.mystery-icon img{
+width:86px;
+height:86px;
+object-fit:contain;
+filter:drop-shadow(0 18px 34px rgba(201,169,110,.24));
+}
+
+.mystery-steps{
+gap:14px;
+}
+
+.mstep,
+.amenity,
+.trust-card,
+.faq-item{
+background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+border:1px solid rgba(241,223,183,.16);
+backdrop-filter:blur(18px);
+box-shadow:0 22px 60px rgba(0,0,0,.24);
+border-radius:8px;
+}
+
+.amenities-grid{
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:18px;
+align-items:stretch;
+}
+
+.amenity{
+position:relative;
+min-height:220px;
+padding:28px 22px;
+text-align:left;
+overflow:hidden;
+transform:translateY(var(--float,0));
+}
+
+.amenity::before{
+content:'';
+position:absolute;
+inset:auto -20% -42% auto;
+width:190px;
+height:190px;
+background:radial-gradient(circle,rgba(201,169,110,.2),transparent 68%);
+transition:transform .45s var(--ease),opacity .45s var(--ease);
+opacity:.62;
+}
+
+.amenity:hover{
+background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.04));
+transform:translateY(-8px);
+box-shadow:0 28px 80px rgba(0,0,0,.34),0 0 42px rgba(201,169,110,.08);
+}
+
+.amenity:hover::before{
+transform:scale(1.18);
+opacity:1;
+}
+
+.amenity-icon{
+display:flex;
+align-items:center;
+justify-content:center;
+width:66px;
+height:66px;
+border:1px solid rgba(241,223,183,.16);
+background:rgba(7,21,14,.44);
+border-radius:8px;
+margin:0 0 20px;
+}
+
+.amenity-icon img{
+width:44px!important;
+height:44px!important;
+margin:0!important;
+}
+
+.amenity-label{
+font-family:'Playfair Display',serif;
+font-size:1.28rem;
+margin-bottom:8px;
+}
+
+.amenity-desc{
+font-size:.92rem;
+line-height:1.62;
+}
+
+.trust-section{
+position:relative;
+z-index:2;
+padding:120px 6%;
+background:
+linear-gradient(180deg,rgba(7,21,14,.95),rgba(13,29,20,.94)),
+url('Images/pub-garden.jpg') center/cover fixed;
+border-block:1px solid rgba(241,223,183,.13);
+}
+
+.trust-section::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(90deg,rgba(7,21,14,.95),rgba(7,21,14,.72),rgba(7,21,14,.95));
+pointer-events:none;
+}
+
+.trust-inner{
+position:relative;
+max-width:1320px;
+margin:auto;
+}
+
+.trust-grid{
+display:grid;
+grid-template-columns:1.15fr .85fr;
+gap:22px;
+margin-top:46px;
+}
+
+.trust-card{
+padding:34px;
+}
+
+.trust-card.featured{
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+min-height:360px;
+}
+
+.trust-quote{
+font-family:'Playfair Display',serif;
+font-size:clamp(1.8rem,3vw,3.2rem);
+line-height:1.1;
+color:var(--ivory);
+}
+
+.trust-byline{
+margin-top:24px;
+color:var(--gold-light);
+}
+
+.trust-ribbon{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:24px;
+}
+
+.faq-list{
+display:grid;
+gap:12px;
+}
+
+.faq-item{
+padding:22px;
+}
+
+.faq-item h3{
+font-size:1rem;
+margin-bottom:8px;
+color:var(--ivory);
+}
+
+.faq-item p{
+color:var(--muted);
+font-size:.92rem;
+line-height:1.6;
+}
+
+.arrival-reveal{
+position:relative;
+min-height:520px;
+display:flex;
+align-items:flex-end;
+overflow:hidden;
+background:#07140d;
+}
+
+.arrival-reveal::before{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(90deg,rgba(7,21,14,.92),rgba(7,21,14,.42) 48%,rgba(7,21,14,.78)),
+linear-gradient(180deg,rgba(7,21,14,.2),rgba(7,21,14,.18) 48%,#08170f 100%);
+z-index:1;
+}
+
+.arrival-reveal img{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+object-position:center 58%;
+filter:saturate(.88) contrast(1.08);
+transform:scale(1.03);
+}
+
+.arrival-reveal-inner{
+position:relative;
+z-index:2;
+width:min(1320px,88vw);
+margin:0 auto;
+padding:120px 0 96px;
+display:grid;
+grid-template-columns:minmax(0,620px);
+}
+
+.arrival-reveal .section-tag{
+margin-bottom:18px;
+}
+
+.arrival-reveal h2{
+font-family:'Playfair Display',serif;
+font-size:clamp(2.8rem,6vw,6.2rem);
+line-height:.98;
+max-width:760px;
+margin-bottom:22px;
+}
+
+.arrival-reveal p{
+max-width:610px;
+color:rgba(247,240,223,.78);
+font-size:1.05rem;
+line-height:1.75;
+margin-bottom:28px;
+}
+
+#booking{
+background:
+radial-gradient(circle at 78% 24%,rgba(201,169,110,.16),transparent 24rem),
+radial-gradient(circle at 18% 70%,rgba(159,183,160,.12),transparent 28rem),
+linear-gradient(180deg,#08170f,#0e2117);
+}
+
+.booking-concierge{
+display:grid;
+grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr);
+gap:24px;
+margin-top:54px;
+align-items:stretch;
+}
+
+.booking-box{
+max-width:none;
+margin:0;
+padding:44px;
+position:relative;
+overflow:hidden;
+}
+
+.booking-box::after{
+content:'';
+position:absolute;
+right:-80px;
+bottom:-100px;
+width:260px;
+height:260px;
+background:radial-gradient(circle,rgba(201,169,110,.18),transparent 70%);
+pointer-events:none;
+}
+
+.booking-box h3{
+font-size:clamp(2rem,3vw,3.4rem);
+line-height:1.06;
+}
+
+.booking-box p{
+max-width:620px;
+}
+
+.booking-proof{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin:24px 0 30px;
+}
+
+.booking-actions{
+display:flex;
+flex-direction:row;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.booking-actions .btn{
+flex:1 1 220px;
+}
+
+.concierge-card{
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+gap:28px;
+padding:34px;
+border:1px solid rgba(241,223,183,.16);
+background:
+linear-gradient(180deg,rgba(7,21,14,.28),rgba(7,21,14,.82)),
+url('Images/Side-profile.jpg') center/cover;
+box-shadow:var(--shadow);
+border-radius:8px;
+min-height:420px;
+overflow:hidden;
+position:relative;
+}
+
+.concierge-card::before{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at 70% 30%,rgba(201,169,110,.2),transparent 18rem);
+pointer-events:none;
+}
+
+.concierge-card > *{
+position:relative;
+}
+
+.concierge-status{
+display:inline-flex;
+width:max-content;
+max-width:100%;
+align-items:center;
+gap:10px;
+padding:9px 12px;
+background:rgba(7,21,14,.62);
+border:1px solid rgba(241,223,183,.2);
+border-radius:999px;
+backdrop-filter:blur(14px);
+font-size:.9rem;
+color:var(--gold-light);
+}
+
+.concierge-status::before,
+.whatsapp-float::before{
+content:'';
+width:9px;
+height:9px;
+border-radius:50%;
+background:#79d888;
+box-shadow:0 0 0 8px rgba(121,216,136,.12);
+}
+
+.concierge-card h3{
+font-family:'Playfair Display',serif;
+font-size:2.5rem;
+line-height:1.1;
+}
+
+.concierge-card p{
+color:rgba(247,240,223,.78);
+line-height:1.7;
+}
+
+.concierge-list{
+display:grid;
+gap:10px;
+list-style:none;
+color:rgba(247,240,223,.82);
+font-size:.95rem;
+}
+
+.concierge-list li{
+padding:10px 0;
+border-bottom:1px solid rgba(241,223,183,.12);
+}
+
+.whatsapp-float{
+position:fixed;
+right:22px;
+bottom:22px;
+z-index:600;
+display:flex;
+align-items:center;
+gap:10px;
+min-height:58px;
+padding:10px 16px 10px 12px;
+background:linear-gradient(135deg,rgba(24,94,57,.96),rgba(12,54,34,.96));
+border:1px solid rgba(241,223,183,.24);
+border-radius:999px;
+box-shadow:0 18px 55px rgba(0,0,0,.42),0 0 0 0 rgba(121,216,136,.35);
+backdrop-filter:blur(16px);
+animation:whatsappPulse 2.8s ease-in-out infinite;
+}
+
+.whatsapp-mark{
+display:grid;
+place-items:center;
+width:38px;
+height:38px;
+border-radius:50%;
+background:rgba(255,255,255,.12);
+font-weight:800;
+color:#fff;
+}
+
+.whatsapp-copy{
+display:flex;
+flex-direction:column;
+line-height:1.15;
+}
+
+.whatsapp-copy strong{
+font-size:.92rem;
+color:#fff;
+}
+
+.whatsapp-copy small{
+font-size:.76rem;
+color:rgba(255,255,255,.72);
+}
+
+@keyframes whatsappPulse{
+0%,100%{box-shadow:0 18px 55px rgba(0,0,0,.42),0 0 0 0 rgba(121,216,136,.32);}
+50%{box-shadow:0 18px 55px rgba(0,0,0,.42),0 0 0 16px rgba(121,216,136,0);}
+}
+
+.reveal{
+opacity:0;
+transform:translateY(28px);
+filter:blur(8px);
+transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease);
+}
+
+.reveal.in-view{
+opacity:1;
+transform:none;
+filter:blur(0);
+}
+
+.stagger-ready > *{
+opacity:0;
+transform:translateY(24px);
+transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+
+.stagger-ready.in-view > *{
+opacity:1;
+transform:none;
+}
+
+.stagger-ready.in-view > *:nth-child(2){transition-delay:.08s;}
+.stagger-ready.in-view > *:nth-child(3){transition-delay:.16s;}
+.stagger-ready.in-view > *:nth-child(4){transition-delay:.24s;}
+.stagger-ready.in-view > *:nth-child(5){transition-delay:.32s;}
+.stagger-ready.in-view > *:nth-child(6){transition-delay:.4s;}
+.stagger-ready.in-view > *:nth-child(7){transition-delay:.48s;}
+.stagger-ready.in-view > *:nth-child(8){transition-delay:.56s;}
+
+@media(max-width:980px){
+
+.hero{
+min-height:92svh;
+}
+
+.hero h1{
+font-size:4.4rem;
+}
+
+.destination-panel,
+.destination-panel:nth-child(even),
+.booking-concierge,
+.trust-grid{
+grid-template-columns:1fr;
+}
+
+.destination-panel:nth-child(even) .destination-media{
+order:0;
+}
+
+.destination-content{
+padding:44px 32px;
+}
+
+.destination-content::before{
+inset:18px;
+}
+
+.gallery-grid{
+grid-template-columns:1fr 1fr;
+grid-template-rows:260px 260px 260px;
+}
+
+.gallery-grid .g-img:nth-child(n){
+grid-column:auto;
+grid-row:auto;
+}
+
+.gallery-grid .g-img:nth-child(1),
+.gallery-grid .g-img:nth-child(6){
+grid-column:span 2;
+}
+
+.amenities-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:640px){
+
+.ambient-mist span{
+min-width:240px;
+min-height:240px;
+}
+
+.hero{
+padding-top:96px;
+min-height:92svh;
+}
+
+.hero h1{
+font-size:3.4rem;
+}
+
+.hero-kicker{
+font-size:1.7rem;
+}
+
+.hero-ctas,
+.booking-actions{
+flex-direction:column;
+}
+
+.hero-ctas .btn,
+.booking-actions .btn{
+width:100%;
+}
+
+.hero-trust span,
+.booking-proof span,
+.trust-ribbon span{
+width:100%;
+justify-content:center;
+}
+
+.editorial-break{
+padding:70px 5%;
+background-attachment:scroll;
+}
+
+.section,
+.trust-section{
+padding:84px 5%;
+}
+
+.route-map-wrap{
+padding:14px;
+}
+
+.destination-media{
+min-height:310px;
+}
+
+.destination-content{
+padding:34px 24px;
+}
+
+.gallery-grid,
+.amenities-grid{
+grid-template-columns:1fr;
+grid-template-rows:none;
+}
+
+.gallery-grid .g-img:nth-child(1),
+.gallery-grid .g-img:nth-child(6){
+grid-column:auto;
+}
+
+.g-img{
+min-height:260px;
+}
+
+.cinematic-image{
+min-height:360px;
+}
+
+.booking-box,
+.concierge-card,
+.trust-card{
+padding:26px;
+}
+
+.whatsapp-float{
+right:14px;
+bottom:14px;
+padding:8px;
+}
+
+.whatsapp-copy{
+display:none;
+}
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+html{
+scroll-behavior:auto;
+}
+
+*,
+*::before,
+*::after{
+animation:none!important;
+transition:none!important;
+}
+
+.reveal,
+.stagger-ready > *{
+opacity:1;
+transform:none;
+filter:none;
+}
+
+}
+
+
+
+/* REQUESTED REFINEMENTS */
+.loader-arch svg{
+filter:drop-shadow(0 24px 50px rgba(201,169,110,.2));
+}
+
+.loader-brand{
+clip-path:inset(0 100% 0 0);
+animation:logoReveal 1.25s var(--ease) 1.15s forwards;
+}
+
+@keyframes logoReveal{
+0%{opacity:0;clip-path:inset(0 100% 0 0);transform:translateY(14px);}
+100%{opacity:1;clip-path:inset(0 0 0 0);transform:none;}
+}
+
+.hero-body{
+padding-bottom:96px;
+}
+
+.hero h1{
+line-height:1.08;
+padding-bottom:.08em;
+overflow:visible;
+}
+
+.route-map{
+background:url('Images/Map.png') center/contain no-repeat!important;
+background-color:#07140d!important;
+aspect-ratio:1024/457;
+min-height:auto;
+}
+
+.route-map::before{
+background:linear-gradient(180deg,rgba(7,21,14,.04),rgba(7,21,14,.12))!important;
+background-size:100% 100%!important;
+}
+
+.route-map::after{
+content:'';
+position:absolute;
+inset:0;
+background:
+linear-gradient(90deg,rgba(7,21,14,.72),transparent 24%,transparent 76%,rgba(7,21,14,.78)),
+linear-gradient(180deg,rgba(7,21,14,.6),transparent 24%,transparent 74%,rgba(7,21,14,.7));
+pointer-events:none;
+z-index:1;
+}
+
+.route-art{
+position:absolute;
+inset:5% 4%;
+width:92%;
+height:90%;
+z-index:2;
+overflow:visible;
+filter:drop-shadow(0 22px 34px rgba(0,0,0,.3));
+display:none;
+}
+
+.route-art .canal-shadow,
+.route-art .canal-water,
+.route-art .canal-glow,
+.route-art .map-lane{
+fill:none;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
+
+.route-art .canal-shadow{stroke:rgba(2,10,7,.72);stroke-width:34;}
+.route-art .canal-water{stroke:rgba(58,94,82,.72);stroke-width:24;}
+.route-art .canal-glow{stroke:rgba(241,223,183,.78);stroke-width:2.6;stroke-dasharray:10 12;animation:mapDash 22s linear infinite;}
+.route-art .map-lane{stroke:rgba(241,223,183,.11);stroke-width:1.4;stroke-dasharray:4 9;}
+.route-art .map-place{fill:rgba(241,223,183,.24);font-family:'Inter',sans-serif;font-size:18px;}
+
+@keyframes mapDash{to{stroke-dashoffset:-220;}}
+
+.route-line,
+.route-order{
+display:none!important;
+}
+
+.route-stops{
+z-index:4;
+}
+
+.stop-dot{
+width:42px;
+height:42px;
+background:transparent;
+box-shadow:none;
+animation:none;
+}
+
+.stop-dot::before{
+content:'';
+position:absolute;
+inset:0;
+border-radius:999px;
+}
+
+.stop-label{
+background:rgba(7,21,14,.76);
+box-shadow:0 12px 28px rgba(0,0,0,.28);
+display:none;
+}
+
+@media(max-width:640px){
+.hero-body{padding-bottom:104px;}
+.route-art{inset:4% 0;width:100%;height:92%;}
+}
+
+.pricing-calendar{
+margin:30px 0;
+padding:22px;
+border:1px solid rgba(241,223,183,.16);
+background:rgba(7,21,14,.42);
+backdrop-filter:blur(18px);
+border-radius:8px;
+box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.booking-steps{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:8px;
+margin:24px 0 20px;
+counter-reset:bookingStep;
+}
+
+.booking-step{
+counter-increment:bookingStep;
+padding:12px;
+border:1px solid rgba(241,223,183,.14);
+background:rgba(255,255,255,.04);
+border-radius:8px;
+color:rgba(247,240,223,.68);
+font-size:.78rem;
+line-height:1.35;
+}
+
+.booking-step::before{
+content:counter(bookingStep);
+display:inline-grid;
+place-items:center;
+width:22px;
+height:22px;
+margin-right:8px;
+border-radius:50%;
+background:rgba(201,169,110,.18);
+color:var(--gold-light);
+font-family:'Inter',sans-serif;
+font-size:.72rem;
+}
+
+.booking-microcopy{
+margin:0 0 18px;
+color:var(--gold-light);
+font-size:.92rem;
+line-height:1.55;
+}
+
+.rate-strip{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:10px;
+margin-bottom:18px;
+}
+
+.rate-card{
+padding:16px;
+border:1px solid rgba(241,223,183,.14);
+background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+border-radius:8px;
+}
+
+.rate-card span{
+display:block;
+color:var(--gold-light);
+font-size:.82rem;
+margin-bottom:4px;
+}
+
+.rate-card strong{
+display:block;
+font-family:'Playfair Display',serif;
+font-size:1.65rem;
+line-height:1;
+}
+
+.rate-card small{
+display:block;
+color:var(--muted);
+font-size:.78rem;
+margin-top:8px;
+line-height:1.45;
+}
+
+.calendar-shell{
+display:grid;
+gap:14px;
+}
+
+.calendar-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+}
+
+.calendar-month{
+font-family:'Playfair Display',serif;
+font-size:1.35rem;
+color:var(--ivory);
+}
+
+.calendar-nav{
+display:flex;
+gap:8px;
+}
+
+.calendar-nav button,
+.calendar-day{
+border:1px solid rgba(241,223,183,.14);
+background:rgba(255,255,255,.045);
+color:var(--ivory);
+border-radius:8px;
+}
+
+.calendar-nav button{
+width:38px;
+height:38px;
+font-size:1.2rem;
+cursor:pointer;
+transition:.25s var(--ease);
+}
+
+.calendar-nav button:hover,
+.calendar-day:hover{
+border-color:rgba(241,223,183,.38);
+background:rgba(201,169,110,.12);
+}
+
+.calendar-grid,
+.calendar-weekdays{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
+}
+
+.calendar-weekdays span{
+text-align:center;
+color:rgba(247,240,223,.52);
+font-size:.74rem;
+}
+
+.calendar-day{
+min-height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:.88rem;
+cursor:pointer;
+transition:.25s var(--ease);
+}
+
+.calendar-day.is-muted{
+opacity:.28;
+pointer-events:none;
+}
+
+.calendar-day.is-selected{
+background:linear-gradient(135deg,#e2c488,var(--gold));
+color:#08140d;
+border-color:transparent;
+box-shadow:0 14px 28px rgba(201,169,110,.2);
+}
+
+.calendar-day.is-arrival{
+outline:2px solid rgba(247,240,223,.62);
+outline-offset:2px;
+}
+
+.calendar-day.is-range{
+background:rgba(201,169,110,.14);
+border-color:rgba(201,169,110,.24);
+}
+
+.calendar-day.is-checkout{
+background:rgba(241,223,183,.16);
+border-color:rgba(241,223,183,.42);
+color:var(--gold-light);
+box-shadow:inset 0 0 0 1px rgba(201,169,110,.16);
+}
+
+.stay-controls{
+display:grid;
+grid-template-columns:minmax(160px,.65fr) 1fr;
+gap:14px;
+align-items:stretch;
+}
+
+.stay-length,
+.booking-estimate{
+padding:18px;
+border:1px solid rgba(241,223,183,.14);
+background:rgba(255,255,255,.045);
+border-radius:8px;
+}
+
+.stay-length label,
+.booking-estimate span{
+display:block;
+color:var(--gold-light);
+font-size:.82rem;
+margin-bottom:8px;
+}
+
+.stay-length select{
+width:100%;
+min-height:42px;
+padding:0 12px;
+border:1px solid rgba(241,223,183,.18);
+background:rgba(7,21,14,.7);
+color:var(--ivory);
+border-radius:8px;
+}
+
+.estimate-total{
+font-family:'Playfair Display',serif;
+font-size:2.2rem;
+line-height:1;
+color:var(--ivory);
+}
+
+.estimate-detail{
+margin-top:8px;
+color:var(--muted);
+font-size:.9rem;
+line-height:1.55;
+}
+
+.discount-note{
+margin-top:10px;
+color:var(--gold-light);
+font-size:.86rem;
+}
+
+.discount-note.is-active{
+display:inline-block;
+padding:8px 10px;
+border:1px solid rgba(201,169,110,.38);
+background:rgba(201,169,110,.14);
+border-radius:8px;
+color:#f3ddb0;
+}
+
+.booking-summary{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:10px;
+margin-top:14px;
+}
+
+.booking-summary-item{
+padding:14px;
+border:1px solid rgba(241,223,183,.14);
+background:rgba(255,255,255,.04);
+border-radius:8px;
+}
+
+.booking-summary-item span{
+display:block;
+font-size:.68rem;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:rgba(247,240,223,.5);
+margin-bottom:6px;
+}
+
+.booking-summary-item strong{
+display:block;
+font-family:'Playfair Display',serif;
+font-size:1.2rem;
+color:var(--gold-light);
+line-height:1.15;
+}
+
+.booking-message{
+min-height:22px;
+margin-top:12px;
+color:#f0c897;
+font-size:.88rem;
+line-height:1.5;
+}
+
+.concierge-message-form{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:10px;
+margin:24px 0 6px;
+}
+
+.concierge-message-form label{
+display:grid;
+gap:7px;
+font-size:.72rem;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:rgba(247,240,223,.54);
+}
+
+.concierge-message-form input,
+.concierge-message-form select,
+.concierge-message-form textarea{
+width:100%;
+border:1px solid rgba(241,223,183,.16);
+background:rgba(7,21,14,.62);
+color:var(--ivory);
+border-radius:8px;
+padding:12px;
+font:inherit;
+letter-spacing:0;
+text-transform:none;
+outline:none;
+transition:.25s var(--ease);
+}
+
+.concierge-message-form input:focus,
+.concierge-message-form select:focus,
+.concierge-message-form textarea:focus{
+border-color:rgba(201,169,110,.48);
+box-shadow:0 0 0 3px rgba(201,169,110,.08);
+}
+
+.concierge-message-form textarea{
+grid-column:1/-1;
+min-height:96px;
+resize:vertical;
+}
+
+.form-status{
+grid-column:1/-1;
+min-height:20px;
+color:var(--gold-light);
+font-size:.86rem;
+line-height:1.45;
+text-transform:none;
+letter-spacing:0;
+}
+
+.summary-updated{
+animation:summaryPulse .65s var(--ease);
+}
+
+@keyframes summaryPulse{
+0%{box-shadow:0 0 0 0 rgba(201,169,110,.3);transform:translateY(0);}
+40%{box-shadow:0 0 0 6px rgba(201,169,110,.08);transform:translateY(-2px);}
+100%{box-shadow:0 0 0 0 rgba(201,169,110,0);transform:translateY(0);}
+}
+
+.booking-actions-wrap{
+display:grid;
+gap:10px;
+flex:1 1 220px;
+min-width:220px;
+align-content:start;
+}
+
+.booking-actions-wrap .btn{
+width:100%;
+}
+
+.deposit-helper{
+color:var(--muted);
+font-size:.86rem;
+line-height:1.45;
+}
+
+.btn.is-secondary-disabled{
+opacity:.54;
+filter:saturate(.7);
+}
+
+@media(max-width:640px){
+.rate-strip,
+.stay-controls,
+.booking-steps,
+.booking-summary,
+.concierge-message-form{
+grid-template-columns:1fr;
+}
+
+.arrival-reveal{
+min-height:560px;
+}
+
+.arrival-reveal::before{
+background:
+linear-gradient(180deg,rgba(7,21,14,.32),rgba(7,21,14,.7) 46%,#08170f 100%),
+linear-gradient(90deg,rgba(7,21,14,.88),rgba(7,21,14,.42));
+}
+
+.arrival-reveal-inner{
+width:90vw;
+padding:110px 0 70px;
+}
+
+.calendar-day{
+min-height:38px;
+}
+}
+
+
+
+/* FINAL FLOW AND BOOKING REFINEMENTS */
+#loader{
+position:fixed!important;
+inset:0!important;
+z-index:9999!important;
+background:radial-gradient(circle at 50% 42%,rgba(201,169,110,.13),transparent 26rem),var(--bg)!important;
+display:flex!important;
+align-items:center!important;
+justify-content:center!important;
+}
+
+.loader-inner{transform:translateY(-2vh);}
+.loader-track{opacity:.55;}
+.hero-body{padding-bottom:110px;}
+.mystery-inline{margin:54px 0 10px;}
+.mystery-inline .section-inner{max-width:none;}
+.route-map-wrap{margin-bottom:42px;}
+.extended-stay{margin-top:12px;color:var(--muted);font-size:.86rem;line-height:1.55;}
+.extended-stay a{color:var(--gold-light);border-bottom:1px solid rgba(241,223,183,.42);}
+#amenities .section-tag::after{content:'Interior photography coming soon';margin-left:12px;font-size:.72rem;color:rgba(247,240,223,.48);text-transform:none;}
+
+/* CALENDAR ENHANCEMENTS */
+.calendar-day.is-unavailable{
+opacity:.38;
+cursor:not-allowed;
+background:linear-gradient(135deg,rgba(255,255,255,.02),rgba(255,255,255,.01))!important;
+color:rgba(247,240,223,.35);
+position:relative;
+border:1px solid rgba(160,104,72,.18)!important;
+}
+
+.calendar-day.is-unavailable::after{
+content:'';
+position:absolute;
+left:20%;
+right:20%;
+top:50%;
+height:1px;
+background:rgba(160,104,72,.35);
+transform:rotate(-18deg);
+}
+
+.calendar-day.is-checkout{
+background:rgba(201,169,110,.22);
+border-color:rgba(241,223,183,.32);
+}
+
+/* DATE INPUTS FOR FROM/TO */
+.date-summary{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:16px 0;
+}
+
+.date-input-group{
+padding:16px;
+background:rgba(255,255,255,.035);
+border:1px solid rgba(241,223,183,.14);
+border-radius:8px;
+}
+
+.date-input-group label{
+display:block;
+font-size:.75rem;
+color:var(--gold-light);
+text-transform:uppercase;
+letter-spacing:.1em;
+margin-bottom:8px;
+}
+
+.date-input-group input[type="date"]{
+width:100%;
+padding:10px 12px;
+background:rgba(7,21,14,.6);
+border:1px solid rgba(241,223,183,.16);
+border-radius:6px;
+color:var(--ivory);
+font-size:.95rem;
+cursor:pointer;
+transition:.25s var(--ease);
+}
+
+.date-input-group input[type="date"]:hover,
+.date-input-group input[type="date"]:focus{
+border-color:rgba(201,169,110,.42);
+background:rgba(7,21,14,.8);
+outline:none;
+}
+
+.date-summary-item{
+text-align:center;
+}
+
+.date-summary-label{
+display:block;
+font-size:.7rem;
+color:var(--muted);
+text-transform:uppercase;
+letter-spacing:.08em;
+margin-bottom:6px;
+}
+
+.date-summary-value{
+font-family:'Playfair Display',serif;
+font-size:1.3rem;
+color:var(--gold-light);
+}
+
+/* POLISH: SMOOTHER LOADER HANDOFF */
+body.is-loaded #loader{
+background:var(--bg);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="ambient-mist" aria-hidden="true">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<!-- LOADER -->
+
+<div id="loader">
+
+<div class="loader-inner">
+
+<div class="loader-arch">
+
+<svg viewBox="0 0 44 52" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M4,50 L4,26 C4,10 40,10 40,26 L40,50"/>
+<line x1="22" y1="10" x2="22" y2="50"/>
+<line x1="4" y1="50" x2="40" y2="50"/>
+
+</svg>
+
+</div>
+
+<div class="loader-brand">
+<span class="lbr">Rest</span>
+<span class="lba">and</span>
+<span class="lbm">Roam</span>
+</div>
+
+<div class="loader-track">
+<div class="loader-fill"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- NAV -->
+
+<nav id="nav">
+
+<div class="nav-inner">
+
+<a href="#" class="logo">
+
+<svg class="logo-mark" viewBox="0 0 44 52" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M4,50 L4,26 C4,10 40,10 40,26 L40,50"/>
+<line x1="22" y1="10" x2="22" y2="50"/>
+<line x1="4" y1="50" x2="40" y2="50"/>
+
+</svg>
+
+<div class="logo-text">
+<span class="logo-text-rest">Rest</span>
+<span class="logo-text-and">and</span>
+<span class="logo-text-roam">Roam</span>
+</div>
+
+</a>
+
+<ul class="nav-links">
+<li><a href="#moorings">Moorings</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#amenities">Amenities</a></li>
+<li><a href="#trust">Guest Reviews</a></li>
+<li><a href="#booking" class="nav-btn">Reserve</a></li>
+</ul>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-bg" id="heroBg"></div>
+
+<div class="hero-overlay"></div>
+
+<div class="hero-body">
+
+<div class="hero-eyebrow">
+Shardlow · Derbyshire
+</div>
+
+<h1>
+Mystery Moorings
+</h1>
+
+<div class="hero-kicker">
+Wake up on <em>England’s most beautiful</em> waterways.
+</div>
+
+<p class="hero-sub">
+Choose your dates, then let the route reveal itself. Your exact mooring, arrival notes, parking guidance, and local recommendations arrive 48 hours before check-in.
+</p>
+
+<div class="hero-ctas">
+<a href="#moorings" class="btn btn-gold">Explore the Moorings</a>
+<a href="https://wa.me/447454243502?text=Hi%20Rest%20%26%20Roam,%20I%E2%80%99m%20interested%20in%20booking%20a%20luxury%20widebeam%20stay." target="_blank" rel="noopener" class="btn btn-outline">WhatsApp Concierge</a>
+</div>
+
+<div class="hero-trust">
+<span>Six curated canal stops</span>
+<span>Dog friendly</span>
+<span>Parking guidance included</span>
+<span>Direct host response</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- MOORINGS -->
+
+<section class="section" id="moorings">
+
+<div class="section-inner">
+
+<div class="section-tag">
+Mystery Mooring Corridor
+</div>
+
+<h2 class="section-title">
+A journey through <em>hidden canal villages</em>
+</h2>
+
+<p class="section-sub">
+Swarkestone → Weston on Trent → Aston Lock → Shardlow → Sawley Lock → Trent Lock. Each stay is curated around mood, weather, light, and access, with your exact arrival point revealed 48 hours before check-in.
+</p>
+
+<div class="route-map-wrap">
+  <div class="route-map" id="routeMap">
+    <svg class="route-art" viewBox="0 0 1000 520" aria-hidden="true" focusable="false">
+      <path class="map-lane" d="M95 438 C190 398 214 330 300 304 C382 280 421 220 512 230 C610 241 675 185 765 200 C835 212 866 177 930 154"/>
+      <path class="map-lane" d="M62 312 C178 304 218 242 334 230 C462 218 530 160 654 172 C760 182 834 130 950 118"/>
+      <path class="map-lane" d="M128 112 C240 148 338 116 444 144 C548 172 628 116 728 136 C812 152 858 110 932 86"/>
+      <path class="canal-shadow" d="M120 380 C185 352 214 326 270 317 C340 306 370 278 430 260 C498 240 528 246 580 244 C644 241 682 238 730 229 C790 218 825 218 870 208"/>
+      <path class="canal-water" d="M120 380 C185 352 214 326 270 317 C340 306 370 278 430 260 C498 240 528 246 580 244 C644 241 682 238 730 229 C790 218 825 218 870 208"/>
+      <path class="canal-glow" d="M120 380 C185 352 214 326 270 317 C340 306 370 278 430 260 C498 240 528 246 580 244 C644 241 682 238 730 229 C790 218 825 218 870 208"/>
+      <text class="map-place" x="98" y="420">Swarkestone</text>
+      <text class="map-place" x="232" y="350">Weston</text>
+      <text class="map-place" x="400" y="230">Aston</text>
+      <text class="map-place" x="558" y="218">Shardlow</text>
+      <text class="map-place" x="704" y="198">Sawley</text>
+      <text class="map-place" x="830" y="178">Trent Lock</text>
+    </svg>
+    <div class="route-line"></div>
+    <div class="route-stops">
+
+      <div class="stop-dot" style="left:20.7%;top:57.7%;"></div>
+      <div class="stop-label" style="left:20.7%;top:64.7%;">Swarkestone</div>
+      <div class="stop-pop" style="left:31%;top:38%;">
+        <h4>Swarkestone</h4>
+        <ul>
+          <li>Crewe and Harpur</li>
+          <li>The Brookfield</li>
+          <li>Swarkestone garden center and cafe</li>
+          <li>Nearby to Willington</li>
+          <li>Aldi</li>
+        </ul>
+        <div class="park">Parking opportunities very close to the location near Swarkestone lock</div>
+      </div>
+
+      <div class="stop-dot" style="left:39.5%;top:71%;"></div>
+      <div class="stop-label" style="left:39.5%;top:78%;">Weston on Trent</div>
+      <div class="stop-pop" style="left:49%;top:45%;">
+        <h4>Weston on Trent</h4>
+        <ul>
+          <li>Coopers Arms</li>
+          <li>Bengal kitchen</li>
+          <li>Aldi</li>
+          <li>Secret garden spa</li>
+        </ul>
+        <div class="park">Parking opportunities very close to the location near Weston lock</div>
+      </div>
+
+      <div class="stop-dot" style="left:49.5%;top:55%;"></div>
+      <div class="stop-label" style="left:49.5%;top:62%;">Aston Lock</div>
+      <div class="stop-pop" style="left:59%;top:32%;">
+        <h4>Aston Lock Operational Area</h4>
+        <ul>
+          <li>The White Hart</li>
+          <li>The Malt</li>
+          <li>Notsa</li>
+          <li>Aston-on-Trent Post Office</li>
+          <li>Co-op Food Aston-on-Trent</li>
+        </ul>
+        <div class="park">Parking opportunities exist near Aston Lane, village roadside parking areas and Aston-on-Trent centre within walking distance of mooring positions.</div>
+      </div>
+
+      <div class="stop-dot" style="left:59.1%;top:38.2%;"></div>
+      <div class="stop-label" style="left:59.1%;top:45.2%;">Shardlow</div>
+      <div class="stop-pop" style="left:65%;top:24%;">
+        <h4>Shardlow Operational Area</h4>
+        <ul>
+          <li>The Navigation Inn</li>
+          <li>The Malt Shovel</li>
+          <li>The New Inn</li>
+          <li>Clock Warehouse</li>
+          <li>Shardlow Village Store</li>
+        </ul>
+        <div class="park">Parking opportunities exist near London Road, Wilne Lane and public parking areas around the Clock Warehouse development.</div>
+      </div>
+
+      <div class="stop-dot" style="left:71.7%;top:31.4%;"></div>
+      <div class="stop-label" style="left:71.7%;top:38.4%;">Sawley Lock</div>
+      <div class="stop-pop" style="left:72%;top:22%;">
+        <h4>Sawley Lock Operational Area</h4>
+        <ul>
+          <li>The Harrington Arms</li>
+          <li>Esquina Tapas</li>
+          <li>White Lion</li>
+          <li>Nags Head</li>
+          <li>Railway Inn</li>
+          <li>Tesco Extra Long Eaton</li>
+          <li>Asda Long Eaton Supercentre</li>
+        </ul>
+        <div class="park">Parking opportunities exist near Sawley Lock approach roads, Tamworth Road and public parking areas near Trent Lock.</div>
+      </div>
+
+      <div class="stop-dot" style="left:91.8%;top:26.4%;"></div>
+      <div class="stop-label" style="left:91.8%;top:33.4%;">Trent Lock</div>
+      <div class="stop-pop" style="left:78%;top:23%;">
+        <h4>Trent Lock Operational Area</h4>
+        <ul>
+          <li>Steamboat Inn</li>
+          <li>Trent Lock Golf & Country Club</li>
+          <li>The Trent Lock Pub</li>
+        </ul>
+        <div class="park">Parking opportunities exist near Lock Lane, Trent Lock public house areas and surrounding roadside spaces.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="mystery-inline">
+
+<div class="section-inner">
+
+<div class="mystery">
+
+<div class="mystery-icon">
+<img src="Assets/mystery.png" alt="">
+</div>
+
+<div class="mystery-flagline">
+Curated moorings across the English canal network
+</div>
+
+<h2 class="mystery-title">
+The <em>Mystery</em> Mooring Reveal
+</h2>
+
+<p class="mystery-copy">
+Your exact mooring location is revealed 48 hours before arrival,
+creating a private travel experience designed around surprise,
+atmosphere,
+and discovery.
+</p>
+
+<div class="mystery-steps">
+
+<div class="mstep">
+<div class="mstep-num">01</div>
+<div class="mstep-title">Choose Your Dates</div>
+<div class="mstep-desc">
+Select your stay and secure your booking directly.
+</div>
+</div>
+
+<div class="mstep">
+<div class="mstep-num">02</div>
+<div class="mstep-title">We Curate the Location</div>
+<div class="mstep-desc">
+We select the perfect mooring based on weather,
+season,
+and atmosphere.
+</div>
+</div>
+
+<div class="mstep">
+<div class="mstep-num">03</div>
+<div class="mstep-title">48 Hour Reveal</div>
+<div class="mstep-desc">
+Arrival instructions,
+parking,
+and local recommendations are delivered directly to you.
+</div>
+</div>
+
+</div>
+
+<a href="#booking" class="btn btn-gold">
+Book a Mystery Stay
+</a>
+
+</div>
+
+</div>
+
+</div>
+<div class="destination-journey">
+
+<article class="destination-panel">
+<div class="destination-media parallax-media">
+<img src="Images/Swarkestone.png" alt="Swarkestone waterside pub and canal stop">
+</div>
+<div class="destination-content">
+<div class="destination-num">01 / Swarkestone</div>
+<h3>Lock-side evenings with a village glow.</h3>
+<p>
+Swarkestone brings the stay into classic Derbyshire: low towpaths, warm pub windows, and easy lock-adjacent arrival. It is the stop for a first glass by the water before the canal settles into night.
+</p>
+<div class="destination-pull">Best for guests who want the romance of a quiet village with practical arrival close by.</div>
+<div class="destination-meta">
+<span>Crewe and Harpur</span>
+<span>The Brookfield</span>
+<span>Garden centre cafe</span>
+<span>Close parking</span>
+</div>
+</div>
+</article>
+
+<article class="destination-panel">
+<div class="destination-media parallax-media">
+<img src="Images/Weston.png" alt="Weston on Trent canal destination with pub atmosphere">
+</div>
+<div class="destination-content">
+<div class="destination-num">02 / Weston on Trent</div>
+<h3>A slower village pause before the reveal deepens.</h3>
+<p>
+Weston on Trent has a softer rhythm: good food, a nearby spa, and a tucked-away waterside feel that makes the mystery mooring concept feel genuinely private.
+</p>
+<div class="destination-pull">A low-key luxury stop for long lunches, spa time, and a calm return to the boat.</div>
+<div class="destination-meta">
+<span>Coopers Arms</span>
+<span>Bengal Kitchen</span>
+<span>Secret Garden Spa</span>
+<span>Very close parking</span>
+</div>
+</div>
+</article>
+
+<article class="destination-panel">
+<div class="destination-media parallax-media">
+<img src="Images/Aston.png" alt="Aston Lock destination near canal and village pubs">
+</div>
+<div class="destination-content">
+<div class="destination-num">03 / Aston Lock</div>
+<h3>Heritage paths, village essentials, and fireside food.</h3>
+<p>
+Aston Lock feels quietly lived-in, with pubs, village shopping, and walkable arrival options. It is the kind of stop where the luxury is not spectacle, but ease.
+</p>
+<div class="destination-pull">For guests who like their escape grounded in local texture and a proper village walk.</div>
+<div class="destination-meta">
+<span>The White Hart</span>
+<span>The Malt</span>
+<span>Co-op nearby</span>
+<span>Walkable parking</span>
+</div>
+</div>
+</article>
+
+<article class="destination-panel">
+<div class="destination-media parallax-media">
+<img src="Images/Shardlow.png" alt="Shardlow historic canal village and pub lights">
+</div>
+<div class="destination-content">
+<div class="destination-num">04 / Shardlow</div>
+<h3>The canal village with old-world theatre.</h3>
+<p>
+Shardlow is the cinematic heart of the corridor: historic brick, inn lights, and the feeling that the waterway has been keeping secrets for centuries.
+</p>
+<div class="destination-pull">The strongest heritage mood, ideal for guests drawn to atmospheric pubs and canal history.</div>
+<div class="destination-meta">
+<span>The Navigation Inn</span>
+<span>The Malt Shovel</span>
+<span>Clock Warehouse</span>
+<span>Village store</span>
+</div>
+</div>
+</article>
+
+<article class="destination-panel">
+<div class="destination-media parallax-media">
+<img src="Images/Sawley.png" alt="Sawley Lock widebeam destination with waterside dining nearby">
+</div>
+<div class="destination-content">
+<div class="destination-num">05 / Sawley Lock</div>
+<h3>Broad water, generous choice, and an easy evening out.</h3>
+<p>
+Sawley Lock gives the escape a more sociable edge, with restaurants, pubs, and supermarkets within reach while the boat remains held in its own quiet world.
+</p>
+<div class="destination-pull">A polished practical stop for guests who want choice without losing the canal-side hush.</div>
+<div class="destination-meta">
+<span>Harrington Arms</span>
+<span>Esquina Tapas</span>
+<span>White Lion</span>
+<span>Major supermarkets</span>
+</div>
+</div>
+</article>
+
+<article class="destination-panel">
+<div class="destination-media parallax-media">
+<img src="Images/Trentlock.png" alt="Trent Lock waterside pubs and canal junction">
+</div>
+<div class="destination-content">
+<div class="destination-num">06 / Trent Lock</div>
+<h3>Where the waterways meet and the night opens out.</h3>
+<p>
+Trent Lock has a junction-side drama: water movement, pub terraces, and the sense of arriving somewhere hidden in plain sight.
+</p>
+<div class="destination-pull">For guests who want the most cinematic waterside ending to the route.</div>
+<div class="destination-meta">
+<span>Steamboat Inn</span>
+<span>Trent Lock Pub</span>
+<span>Golf &amp; country club</span>
+<span>Lock Lane access</span>
+</div>
+</div>
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section class="section" id="gallery">
+
+<div class="section-inner">
+
+<div class="section-tag">
+Visual Escape
+</div>
+
+<h2 class="section-title">
+The route in <em>motion</em>
+</h2>
+
+<div class="gallery-grid">
+
+<figure class="g-img parallax-media">
+<img src="Images/Cruising.jpeg" alt="Cruising along the canal from the widebeam roof">
+<figcaption>Cruising through the corridor</figcaption>
+</figure>
+
+<figure class="g-img parallax-media">
+<img src="Images/navigation.jpg" alt="Narrow canal navigation and towpath">
+<figcaption>Heritage navigation routes</figcaption>
+</figure>
+
+<figure class="g-img parallax-media">
+<img src="Images/lock-sunset.jpg" alt="Canal lock at sunset">
+<figcaption>Lock light at dusk</figcaption>
+</figure>
+
+<figure class="g-img parallax-media">
+<img src="Images/pub-garden.jpg" alt="Waterside pub garden">
+<figcaption>Warm pub gardens nearby</figcaption>
+</figure>
+
+<figure class="g-img parallax-media">
+<img src="Images/boat-marina.jpg" alt="Widebeam canal boat moored in soft evening light">
+<figcaption>Evening mooring light</figcaption>
+</figure>
+
+<figure class="g-img parallax-media">
+<img src="Images/hero.jpg" alt="Rest and Roam widebeam canal setting">
+<figcaption>Arrival by the water</figcaption>
+</figure>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- AMENITIES -->
+
+<section class="section" id="amenities">
+
+<div class="section-inner">
+
+<div class="section-tag">
+On Board
+</div>
+
+<h2 class="section-title">
+Everything quietly <em>handled</em>
+</h2>
+
+<p class="section-sub">
+The boat is prepared like a compact boutique suite: practical where it needs to be, atmospheric everywhere else.
+</p>
+
+<div class="amenities-grid">
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/kingbed.png" alt=""></div>
+<div class="amenity-label">Boutique Bedroom</div>
+<div class="amenity-desc">
+Layered bedding, soft lighting, and blackout comfort for properly slow mornings.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/showerroom.png" alt=""></div>
+<div class="amenity-label">Shower Room</div>
+<div class="amenity-desc">
+Hot shower, considered details, and the essentials ready on arrival.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/Fullkitchen.png" alt=""></div>
+<div class="amenity-label">Full Kitchen</div>
+<div class="amenity-desc">
+Cook slowly, make coffee by the window, or bring back something local.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/TVWIFI.png" alt=""></div>
+<div class="amenity-label">Wi‑Fi & TV</div>
+<div class="amenity-desc">
+Modern comforts kept discreet, ready for rainy evenings onboard.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/Welcomebasket.png" alt=""></div>
+<div class="amenity-label">Welcome Basket</div>
+<div class="amenity-desc">
+Thoughtful arrival touches that make the first hour feel already settled.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/Dog.png" alt=""></div>
+<div class="amenity-label">Dog Friendly</div>
+<div class="amenity-desc">
+Towpath walks begin at the door, with water, fields, and pub stops nearby.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/Freeparking.png" alt=""></div>
+<div class="amenity-label">Parking Guidance</div>
+<div class="amenity-desc">
+Your reveal includes local parking context so arrival feels simple.
+</div>
+</div>
+
+<div class="amenity">
+<div class="amenity-icon"><img src="Assets/Checkin.png" alt=""></div>
+<div class="amenity-label">Concierge Check‑in</div>
+<div class="amenity-desc">
+Clear arrival notes, mooring details, and host support before you travel.
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TRUST -->
+
+<section class="trust-section" id="trust">
+
+<div class="trust-inner">
+
+<div class="section-tag">
+Guest Reviews
+</div>
+
+<h2 class="section-title">
+Kind words from <em>the water</em>
+</h2>
+
+<p class="section-sub">
+A premium stay is built on atmosphere, but it is secured by confidence: responsive hosting, clear arrival notes, and guests who feel properly looked after.
+</p>
+
+<div class="trust-grid">
+
+<article class="trust-card featured">
+<div>
+<div class="section-tag">Guest Mood</div>
+<div class="trust-quote">
+“It felt less like hiring a boat and more like being let into a private waterside hideaway.”
+</div>
+</div>
+<div>
+<div class="trust-byline">Recent guest sentiment</div>
+<div class="trust-ribbon">
+<span>Direct host contact</span>
+<span>Secure Stripe deposit</span>
+<span>48-hour arrival reveal</span>
+<span>Clear parking notes</span>
+</div>
+</div>
+</article>
+
+<div class="faq-list">
+
+<article class="faq-item">
+<h3>How fast do you reply?</h3>
+<p>WhatsApp enquiries are usually answered within minutes during daytime concierge hours.</p>
+</article>
+
+<article class="faq-item">
+<h3>When do we get the exact location?</h3>
+<p>Your mooring, arrival instructions, parking guidance, and nearby recommendations are sent 48 hours before arrival.</p>
+</article>
+
+<article class="faq-item">
+<h3>Is payment secure?</h3>
+<p>Deposit payments are handled through Stripe, with the rest of the booking conversation kept direct and personal.</p>
+</article>
+
+<article class="faq-item">
+<h3>What if we need help during the stay?</h3>
+<p>You have direct host contact for arrival questions, local context, and practical support around the boat.</p>
+</article>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ARRIVAL REVEAL -->
+
+<section class="arrival-reveal" aria-labelledby="arrivalRevealTitle">
+<img src="Images/hero.jpg" alt="Rest and Roam arrival by the water">
+<div class="arrival-reveal-inner">
+<div class="section-tag">
+Arrival by the Water
+</div>
+<h2 id="arrivalRevealTitle">
+The reveal is part of <em>the escape</em>
+</h2>
+<p>
+Your exact arrival point is revealed 48 hours before check-in &mdash; with parking notes, waterside directions and nearby recommendations sent directly to you.
+</p>
+<a href="#booking" class="btn btn-gold">Check dates</a>
+</div>
+</section>
+
+<!-- BOOKING -->
+
+<section class="section" id="booking">
+
+<div class="section-inner">
+
+<div class="section-tag">
+Direct Booking
+</div>
+
+<h2 class="section-title">
+Begin a <em>private reservation</em>
+</h2>
+
+<p class="section-sub">
+Tell us the kind of stay you want and we will guide the mooring, arrival, and payment flow personally.
+</p>
+
+<div class="booking-concierge">
+
+<div class="booking-box">
+
+<h3>
+Concierge Booking Enquiries
+</h3>
+
+<p>
+Share your dates, guest count, dog plans, and the pace of escape you want. We will confirm availability, recommend the right stay length, and send the next step directly.
+</p>
+
+<div class="booking-steps" aria-label="Booking steps">
+<div class="booking-step">Select arrival</div>
+<div class="booking-step">Choose stay length</div>
+<div class="booking-step">Review estimate</div>
+<div class="booking-step">Message or deposit</div>
+</div>
+
+<div class="pricing-calendar" aria-label="Seasonal pricing and availability calendar">
+<p class="booking-microcopy">Pick an arrival date, then adjust your stay length &mdash; the calendar and price update together.</p>
+<div class="rate-strip">
+<div class="rate-card">
+<span>Winter</span>
+<strong>&pound;180</strong>
+<small>Per night, December to February.</small>
+</div>
+<div class="rate-card">
+<span>Spring &amp; Autumn</span>
+<strong>&pound;220</strong>
+<small>Per night, March to May and September to November.</small>
+</div>
+<div class="rate-card">
+<span>Summer</span>
+<strong>&pound;245</strong>
+<small>Per night, June to August.</small>
+</div>
+</div>
+
+<div class="calendar-shell">
+<div class="calendar-head">
+<div>
+<div class="calendar-month" id="calendarMonth">Select arrival</div>
+<div class="estimate-detail" id="seasonLabel">Seven nights saves 15%. Longer stays are arranged directly.</div>
+</div>
+<div class="calendar-nav">
+<button type="button" id="prevMonth" aria-label="Previous month">&lsaquo;</button>
+<button type="button" id="nextMonth" aria-label="Next month">&rsaquo;</button>
+</div>
+</div>
+
+<div class="calendar-weekdays" aria-hidden="true">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+
+<div class="calendar-grid" id="calendarGrid"></div>
+
+<div class="stay-controls">
+<div class="stay-length">
+<label for="stayNights">Stay length</label>
+<select id="stayNights">
+<option value="1">1 night</option>
+<option value="2">2 nights</option>
+<option value="3" selected>3 nights</option>
+<option value="4">4 nights</option>
+<option value="5">5 nights</option>
+<option value="6">6 nights</option>
+<option value="7">7 nights - save 15%</option>
+</select>
+</div>
+
+<div class="booking-estimate" aria-live="polite">
+<span>Estimated stay from selected arrival</span>
+<div class="estimate-total" id="estimateTotal">&pound;660</div>
+<div class="estimate-detail" id="estimateDetail">3 nights at &pound;220 per night.</div>
+<div class="discount-note" id="discountNote">Choose 7 nights to unlock the 15% long-stay saving.</div>
+<div class="extended-stay">For stays over 7 nights, <a href="https://wa.me/447454243502?text=Hi%20Rest%20%26%20Roam,%20I%E2%80%99d%20like%20to%20discuss%20a%20stay%20longer%20than%207%20nights." target="_blank" rel="noopener">contact us directly on WhatsApp</a>.</div>
+</div>
+</div>
+
+<div class="booking-summary" id="bookingSummary" aria-live="polite">
+<div class="booking-summary-item">
+<span>Arrival</span>
+<strong id="summaryArrival">Select a date</strong>
+</div>
+<div class="booking-summary-item">
+<span>Checkout</span>
+<strong id="summaryCheckout">&mdash;</strong>
+</div>
+<div class="booking-summary-item">
+<span>Stay</span>
+<strong id="summaryNights">3 nights</strong>
+</div>
+<div class="booking-summary-item">
+<span>Total</span>
+<strong id="summaryTotal">&pound;660</strong>
+</div>
+</div>
+
+<div class="booking-message" id="bookingMessage" aria-live="polite"></div>
+</div>
+</div>
+
+<div class="booking-proof">
+<span>Typically replies within minutes</span>
+<span>Limited mooring allocations</span>
+<span>Sleeps up to 4 guests</span>
+<span>No platform fees</span>
+<span>Secure deposit option</span>
+</div>
+
+<form class="concierge-message-form" id="conciergeMessageForm">
+<label>
+Name
+<input type="text" id="guestName" name="name" autocomplete="name" placeholder="Your name">
+</label>
+<label>
+Email
+<input type="email" id="guestEmail" name="email" autocomplete="email" placeholder="you@example.com">
+</label>
+<label>
+Phone
+<input type="tel" id="guestPhone" name="phone" autocomplete="tel" placeholder="+44...">
+</label>
+<label>
+Guests
+<select id="guestCount" name="guestCount">
+<option value="1">1 guest</option>
+<option value="2" selected>2 guests</option>
+<option value="3">3 guests</option>
+<option value="4">4 guests max</option>
+</select>
+</label>
+<label>
+Message
+<textarea id="guestMessage" name="message" placeholder="Tell us guest count, dog plans, or anything you want arranged."></textarea>
+</label>
+<div class="form-status" id="conciergeFormStatus" aria-live="polite"></div>
+</form>
+
+<div class="booking-actions">
+
+<a
+href="https://wa.me/447454243502?text=Hi%20Rest%20%26%20Roam,%20I%E2%80%99m%20interested%20in%20booking%20a%20luxury%20widebeam%20stay."
+target="_blank"
+rel="noopener"
+class="btn btn-gold"
+id="bookingWhatsapp"
+>
+Message the Concierge
+</a>
+
+<div class="booking-actions-wrap">
+<a
+href="#"
+class="btn btn-outline"
+id="depositButton"
+>
+Secure Deposit via Stripe
+</a>
+<div class="deposit-helper" id="depositHelper">Select dates first.</div>
+</div>
+
+</div>
+
+</div>
+
+<aside class="concierge-card">
+<div class="concierge-status">Concierge available</div>
+<div>
+<h3>Your stay, quietly arranged.</h3>
+<p>
+The best mooring is chosen around the season, the light, the weather, and the kind of arrival you want.
+</p>
+</div>
+<ul class="concierge-list">
+<li>48-hour mystery mooring reveal</li>
+<li>Sleeps up to 4 guests</li>
+<li>Arrival and parking instructions included</li>
+<li>Local pub and dining notes sent before check-in</li>
+<li>Direct host support before and during your stay</li>
+</ul>
+</aside>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-inner">
+
+<a href="#" class="logo">
+
+<svg class="logo-mark" viewBox="0 0 44 52" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M4,50 L4,26 C4,10 40,10 40,26 L40,50"/>
+<line x1="22" y1="10" x2="22" y2="50"/>
+<line x1="4" y1="50" x2="40" y2="50"/>
+
+</svg>
+
+<div class="logo-text">
+<span class="logo-text-rest">Rest</span>
+<span class="logo-text-and">and</span>
+<span class="logo-text-roam">Roam</span>
+</div>
+
+</a>
+
+<div class="footer-copy">
+© 2026 Rest & Roam · Luxury Widebeam Canal Stays
+</div>
+
+</div>
+
+</footer>
+
+<a
+href="https://wa.me/447454243502?text=Hi%20Rest%20%26%20Roam,%20I%E2%80%99m%20interested%20in%20booking%20a%20luxury%20widebeam%20stay."
+target="_blank"
+rel="noopener"
+class="whatsapp-float"
+aria-label="Message the Rest and Roam concierge on WhatsApp"
+>
+<span class="whatsapp-mark">WA</span>
+<span class="whatsapp-copy">
+<strong>Concierge available</strong>
+<small>Typically replies within minutes</small>
+</span>
+</a>
+
+<script>
+
+window.addEventListener('load',()=>{
+
+setTimeout(()=>{
+document.getElementById('heroBg').classList.add('pan');
+},200);
+
+setTimeout(()=>{
+document.getElementById('loader').classList.add('out');
+},2900);
+
+});
+
+const nav=document.getElementById('nav');
+
+window.addEventListener('scroll',()=>{
+nav.classList.toggle('solid',window.scrollY>30);
+});
+
+// Subtle line-draw animation for all logo marks on load
+document.querySelectorAll('.logo-mark path, .logo-mark line').forEach((seg,i)=>{
+  const len=seg.getTotalLength();
+  seg.style.strokeDasharray=len;
+  seg.style.strokeDashoffset=len;
+  seg.style.animation=`drawLogo 1.4s var(--ease) ${0.15*i}s forwards`;
+});
+
+const drawStyle=document.createElement('style');
+drawStyle.textContent=`
+@keyframes drawLogo{
+  to{stroke-dashoffset:0;}
+}`;
+document.head.appendChild(drawStyle);
+
+const revealTargets=[
+  ...document.querySelectorAll('.section-inner,.cinematic-content,.destination-panel,.mystery,.trust-card,.faq-item,.booking-concierge,.editorial-break blockquote')
+];
+
+const staggerTargets=[
+  document.querySelector('.amenities-grid'),
+  document.querySelector('.hero-trust'),
+  document.querySelector('.booking-proof'),
+  document.querySelector('.trust-ribbon')
+].filter(Boolean);
+
+revealTargets.forEach(el=>el.classList.add('reveal'));
+staggerTargets.forEach(el=>el.classList.add('stagger-ready'));
+
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+
+[...revealTargets,...staggerTargets].forEach(el=>revealObserver.observe(el));
+
+const parallaxItems=[...document.querySelectorAll('.parallax-media img')];
+let ticking=false;
+
+function updateParallax(){
+  const viewHeight=window.innerHeight || 1;
+  parallaxItems.forEach(img=>{
+    const rect=img.parentElement.getBoundingClientRect();
+    const midpoint=rect.top + rect.height / 2;
+    const progress=(midpoint - viewHeight / 2) / viewHeight;
+    const shift=Math.max(-26,Math.min(26,progress * -34));
+    img.style.setProperty('--shift',`${shift}px`);
+  });
+
+  const hero=document.getElementById('heroBg');
+  if(hero){
+    const heroShift=Math.min(70,window.scrollY * .12);
+    hero.style.setProperty('--hero-shift',`${heroShift}px`);
+  }
+
+  ticking=false;
+}
+
+function requestParallax(){
+  if(!ticking){
+    requestAnimationFrame(updateParallax);
+    ticking=true;
+  }
+}
+
+window.addEventListener('scroll',requestParallax,{passive:true});
+window.addEventListener('resize',requestParallax);
+requestParallax();
+
+const calendarGrid=document.getElementById('calendarGrid');
+const calendarMonth=document.getElementById('calendarMonth');
+const seasonLabel=document.getElementById('seasonLabel');
+const stayNights=document.getElementById('stayNights');
+const estimateTotal=document.getElementById('estimateTotal');
+const estimateDetail=document.getElementById('estimateDetail');
+const discountNote=document.getElementById('discountNote');
+const prevMonth=document.getElementById('prevMonth');
+const nextMonth=document.getElementById('nextMonth');
+const bookingSummary=document.getElementById('bookingSummary');
+const summaryArrival=document.getElementById('summaryArrival');
+const summaryCheckout=document.getElementById('summaryCheckout');
+const summaryNights=document.getElementById('summaryNights');
+const summaryTotal=document.getElementById('summaryTotal');
+const bookingMessage=document.getElementById('bookingMessage');
+const bookingWhatsapp=document.getElementById('bookingWhatsapp');
+const depositButton=document.getElementById('depositButton');
+const depositHelper=document.getElementById('depositHelper');
+const conciergeMessageForm=document.getElementById('conciergeMessageForm');
+const conciergeFormStatus=document.getElementById('conciergeFormStatus');
+const guestName=document.getElementById('guestName');
+const guestEmail=document.getElementById('guestEmail');
+const guestPhone=document.getElementById('guestPhone');
+const guestCount=document.getElementById('guestCount');
+const guestMessage=document.getElementById('guestMessage');
+
+const defaultWhatsAppMessage='Hi Rest & Roam, I am interested in booking a luxury widebeam stay.';
+const defaultWhatsAppHref=`https://wa.me/447454243502?text=${encodeURIComponent(defaultWhatsAppMessage)}`;
+
+const rates={
+  winter:{label:'Winter',price:180},
+  shoulder:{label:'Spring / Autumn',price:220},
+  summer:{label:'Summer',price:245}
+};
+
+// Define unavailable dates (placeholder bookings)
+const unavailableDates=new Set([
+  '2026-05-20','2026-05-21','2026-05-22','2026-05-23','2026-05-24',
+  '2026-06-10','2026-06-11','2026-06-12','2026-06-13','2026-06-14','2026-06-15',
+  '2026-07-05','2026-07-06','2026-07-07','2026-07-08'
+]);
+
+const formatGBP=value=>new Intl.NumberFormat('en-GB',{
+  style:'currency',
+  currency:'GBP',
+  maximumFractionDigits:0
+}).format(value);
+
+const toIso=date=>{
+  const y=date.getFullYear();
+  const m=String(date.getMonth()+1).padStart(2,'0');
+  const d=String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+};
+
+const startOfDay=date=>new Date(date.getFullYear(),date.getMonth(),date.getDate());
+const addDays=(date,days)=>{
+  const next=new Date(date);
+  next.setDate(next.getDate()+days);
+  return startOfDay(next);
+};
+
+const formatDate=date=>date.toLocaleDateString('en-GB',{
+  weekday:'short',
+  day:'numeric',
+  month:'long'
+});
+
+function getSeason(date){
+  const month=date.getMonth()+1;
+  if(month===12 || month<=2) return rates.winter;
+  if(month>=6 && month<=8) return rates.summer;
+  return rates.shoulder;
+}
+
+let selectedDate=null;
+let calendarCursor=new Date(new Date().getFullYear(),new Date().getMonth(),1);
+let lastValidNights=Number(stayNights?.value || 3);
+
+function rangeHasUnavailable(arrival,nights){
+  for(let i=0;i<nights;i++){
+    if(unavailableDates.has(toIso(addDays(arrival,i)))) return true;
+  }
+  return false;
+}
+
+function getBookingDetails(){
+  if(!selectedDate) return null;
+  const nights=Number(stayNights.value || 1);
+  const checkout=addDays(selectedDate,nights);
+  const season=getSeason(selectedDate);
+  const subtotal=season.price*nights;
+  const discount=nights===7 ? Math.round(subtotal*0.15) : 0;
+  const total=subtotal-discount;
+  return {nights,checkout,season,subtotal,discount,total};
+}
+
+function showBookingMessage(message){
+  if(bookingMessage) bookingMessage.textContent=message || '';
+}
+
+function showFormStatus(message,isError=false){
+  if(!conciergeFormStatus) return;
+  conciergeFormStatus.textContent=message || '';
+  conciergeFormStatus.style.color=isError ? '#f0c897' : 'var(--gold-light)';
+}
+
+function pulseSummary(){
+  [bookingSummary,estimateTotal,estimateDetail,discountNote,seasonLabel].filter(Boolean).forEach(el=>{
+    el.classList.remove('summary-updated');
+    void el.offsetWidth;
+    el.classList.add('summary-updated');
+  });
+}
+
+function updateBookingActions(details){
+  if(!bookingWhatsapp) return;
+
+  if(!selectedDate || !details){
+    bookingWhatsapp.href=defaultWhatsAppHref;
+    if(depositButton){
+      depositButton.classList.add('is-secondary-disabled');
+      depositButton.setAttribute('aria-disabled','true');
+    }
+    if(depositHelper) depositHelper.textContent='Select dates first.';
+    return;
+  }
+
+  const message=[
+    'Hi Rest & Roam, I am interested in booking a Mystery Mooring stay.',
+    '',
+    `Arrival: ${formatDate(selectedDate)}`,
+    `Checkout: ${formatDate(details.checkout)}`,
+    `Stay length: ${details.nights} night${details.nights===1?'':'s'}`,
+    `Guests: ${guestCount?.value || 2} guest${Number(guestCount?.value || 2)===1?'':'s'}`,
+    `Estimated total: ${formatGBP(details.total)}`,
+    '',
+    'Please can you confirm availability?'
+  ].join('\n');
+
+  bookingWhatsapp.href=`https://wa.me/447454243502?text=${encodeURIComponent(message)}`;
+  if(depositButton){
+    depositButton.classList.remove('is-secondary-disabled');
+    depositButton.removeAttribute('aria-disabled');
+  }
+  if(depositHelper) depositHelper.textContent='Opens Stripe Checkout. Apple Pay appears on eligible Apple devices once it is enabled in Stripe.';
+}
+
+function buildBookingPayload(){
+  const details=getBookingDetails();
+  const fallbackMessage='Please can you confirm availability?';
+
+  return {
+    arrivalDate:selectedDate ? toIso(selectedDate) : null,
+    checkoutDate:details ? toIso(details.checkout) : null,
+    nights:details ? details.nights : Number(stayNights?.value || 0),
+    estimatedTotal:details ? details.total : 0,
+    season:details ? details.season.label : null,
+    guestCount:Number(guestCount?.value || 2),
+    name:guestName?.value.trim() || null,
+    email:guestEmail?.value.trim() || null,
+    phone:guestPhone?.value.trim() || null,
+    message:guestMessage?.value.trim() || fallbackMessage
+  };
+}
+
+async function saveConciergeMessage(){
+  const payload=buildBookingPayload();
+  const response=await fetch('/api/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(data.error || 'Message could not be saved.');
+  return data;
+}
+
+function renderCalendar(){
+  if(!calendarGrid) return;
+
+  const year=calendarCursor.getFullYear();
+  const month=calendarCursor.getMonth();
+  const firstDay=new Date(year,month,1);
+  const dayOffset=(firstDay.getDay()+6)%7;
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const today=startOfDay(new Date());
+  const nights=Number(stayNights.value || 1);
+
+  calendarMonth.textContent=firstDay.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  calendarGrid.innerHTML='';
+
+  for(let i=0;i<42;i++){
+    const dayNumber=i-dayOffset+1;
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='calendar-day';
+
+    if(dayNumber<1 || dayNumber>daysInMonth){
+      button.textContent='';
+      button.classList.add('is-muted');
+      calendarGrid.appendChild(button);
+      continue;
+    }
+
+    const date=new Date(year,month,dayNumber);
+    const diffFromSelected=selectedDate ? Math.round((date-selectedDate)/86400000) : null;
+
+    button.textContent=String(dayNumber);
+    button.dataset.date=toIso(date);
+
+    if(date.getTime() < today.getTime()){
+      button.classList.add('is-muted');
+      button.disabled=true;
+    }
+
+    if(unavailableDates.has(toIso(date))){
+      button.classList.add('is-unavailable');
+      button.disabled=true;
+    }
+
+    if(selectedDate){
+      if(toIso(date)===toIso(selectedDate)){
+        button.classList.add('is-selected','is-arrival');
+        button.setAttribute('aria-label',`${formatDate(date)}, arrival date`);
+      }else if(diffFromSelected > 0 && diffFromSelected < nights){
+        button.classList.add('is-range');
+        button.setAttribute('aria-label',`${formatDate(date)}, included in selected stay`);
+      }else if(diffFromSelected===nights){
+        button.classList.add('is-checkout');
+        button.setAttribute('aria-label',`${formatDate(date)}, checkout date`);
+      }
+    }
+
+    button.addEventListener('click',()=>{
+      if(rangeHasUnavailable(date,nights)){
+        const checkout=addDays(date,nights);
+        showBookingMessage(`That ${nights}-night stay from ${formatDate(date)} to ${formatDate(checkout)} includes unavailable dates. Please choose another arrival date.`);
+        return;
+      }
+      selectedDate=date;
+      updateEstimate();
+      renderCalendar();
+    });
+
+    calendarGrid.appendChild(button);
+  }
+}
+
+function updateEstimate(){
+  if(!estimateTotal) return;
+
+  const nights=Number(stayNights.value || 1);
+
+  if(!selectedDate){
+    seasonLabel.textContent='Select an arrival date to see the season, checkout date, and estimate.';
+    estimateTotal.textContent='Select dates';
+    estimateDetail.textContent='Choose an arrival date on the calendar, then adjust your stay length.';
+    discountNote.textContent=nights===7
+      ? 'The 15% seven-night saving will apply once you select an available arrival date.'
+      : 'Choose 7 nights to unlock the 15% long-stay saving.';
+    discountNote.classList.toggle('is-active',nights===7);
+    if(summaryArrival) summaryArrival.textContent='Select a date';
+    if(summaryCheckout) summaryCheckout.textContent='-';
+    if(summaryNights) summaryNights.textContent=`${nights} night${nights===1?'':'s'}`;
+    if(summaryTotal) summaryTotal.textContent='—';
+    updateBookingActions(null);
+    return;
+  }
+
+  const details=getBookingDetails();
+  const dateText=formatDate(selectedDate);
+
+  seasonLabel.textContent=`${dateText} sits in ${details.season.label} pricing. Checkout is ${formatDate(details.checkout)}.`;
+  estimateTotal.textContent=formatGBP(details.total);
+  estimateDetail.textContent=`${details.nights} night${details.nights===1?'':'s'} at ${formatGBP(details.season.price)} per night. Arrival ${dateText}; checkout ${formatDate(details.checkout)}.`;
+  discountNote.textContent=details.discount
+    ? `Seven-night saving applied: ${formatGBP(details.discount)} off the ${formatGBP(details.subtotal)} seasonal rate.`
+    : 'Choose 7 nights to unlock the 15% long-stay saving.';
+  discountNote.classList.toggle('is-active',Boolean(details.discount));
+  if(summaryArrival) summaryArrival.textContent=dateText;
+  if(summaryCheckout) summaryCheckout.textContent=formatDate(details.checkout);
+  if(summaryNights) summaryNights.textContent=`${details.nights} night${details.nights===1?'':'s'}`;
+  if(summaryTotal) summaryTotal.textContent=formatGBP(details.total);
+  showBookingMessage('');
+  updateBookingActions(details);
+  pulseSummary();
+}
+
+if(calendarGrid){
+  conciergeMessageForm?.addEventListener('submit',event=>{
+    event.preventDefault();
+  });
+
+  prevMonth.addEventListener('click',()=>{
+    calendarCursor.setMonth(calendarCursor.getMonth()-1);
+    renderCalendar();
+  });
+
+  nextMonth.addEventListener('click',()=>{
+    calendarCursor.setMonth(calendarCursor.getMonth()+1);
+    renderCalendar();
+  });
+
+  stayNights.addEventListener('change',()=>{
+    const requestedNights=Number(stayNights.value || 1);
+    if(selectedDate && rangeHasUnavailable(selectedDate,requestedNights)){
+      const checkout=addDays(selectedDate,requestedNights);
+      stayNights.value=String(lastValidNights);
+      showBookingMessage(`That stay length would run to ${formatDate(checkout)} and cross unavailable dates. Please choose another arrival date or a shorter stay.`);
+      renderCalendar();
+      return;
+    }
+    lastValidNights=requestedNights;
+    updateEstimate();
+    renderCalendar();
+  });
+
+  depositButton?.addEventListener('click',event=>{
+    event.preventDefault();
+    if(!selectedDate){
+      showBookingMessage('Select dates first.');
+      return;
+    }
+
+    const details=getBookingDetails();
+    if(!details){
+      showBookingMessage('Select dates first.');
+      return;
+    }
+
+    const originalText=depositButton.textContent;
+    depositButton.textContent='Opening secure checkout...';
+    depositButton.classList.add('is-secondary-disabled');
+    showBookingMessage('');
+
+    fetch('/api/create-checkout-session',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(buildBookingPayload())
+    })
+      .then(response=>response.json().then(data=>({response,data})))
+      .then(({response,data})=>{
+        if(!response.ok) throw new Error(data.error || 'Stripe Checkout could not be started.');
+        window.location.href=data.url;
+      })
+      .catch(error=>{
+        showBookingMessage(error.message);
+        depositButton.textContent=originalText;
+        depositButton.classList.remove('is-secondary-disabled');
+      });
+  });
+
+  bookingWhatsapp?.addEventListener('click',async event=>{
+    event.preventDefault();
+    const whatsappUrl=bookingWhatsapp.href;
+    const popup=window.open('about:blank','_blank');
+    showFormStatus('Saving your enquiry...');
+
+    try{
+      await saveConciergeMessage();
+      showFormStatus('Enquiry saved. Opening WhatsApp...');
+      if(popup) popup.location.href=whatsappUrl;
+      else window.location.href=whatsappUrl;
+    }catch(error){
+      showFormStatus(`${error.message} Opening WhatsApp instead.`,true);
+      if(popup) popup.location.href=whatsappUrl;
+      else window.location.href=whatsappUrl;
+    }
+  });
+
+  updateEstimate();
+  renderCalendar();
+}
+
+
+
+// Draw the loading logo mark before revealing the brand text.
+document.querySelectorAll('.loader-arch path, .loader-arch line').forEach((seg,i)=>{
+  const len=seg.getTotalLength();
+  seg.style.strokeDasharray=len;
+  seg.style.strokeDashoffset=len;
+  seg.style.animation='drawLogo 1.65s var(--ease) ' + (0.18*i) + 's forwards';
+});
+
+</script>
+
+</body>
+</html>
